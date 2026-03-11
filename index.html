@@ -5,29 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>UzPost E-Commerce · Прогноз 2025–2027</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-/* === UzPost Brand Colors ===
-   Primary Orange: #FF6B00 / #F7931E
-   Primary Blue:   #003087 / #0050B3
-   Background:     #F5F7FA (light grey-white)
-   Surface:        #FFFFFF
-   Text:           #1A1A2E
-   Muted:          #6B7280
-*/
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:linear-gradient(160deg,#EEF2FF,#F5F7FA,#FFF4ED);color:#1A1A2E;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;padding:18px 12px}
-.wrap{max-width:1200px;margin:0 auto}
+.wrap{max-width:1280px;margin:0 auto}
 h1{font-size:20px;font-weight:900;letter-spacing:-.5px;color:#003087}
-.accent{color:#FF6B00}
 .sub{font-size:11px;color:#6B7280;margin-top:2px}
-.header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px}
-.tabs{display:flex;gap:6px}
+.header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;background:linear-gradient(135deg,#003087,#0050B3);padding:14px 18px;border-radius:14px;box-shadow:0 4px 16px rgba(0,48,135,.25)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
 .tab{padding:7px 16px;border-radius:8px;border:none;cursor:pointer;font-size:13px;font-weight:700;transition:all .2s}
 .tab.on{background:#003087;color:#fff;box-shadow:0 2px 8px rgba(0,48,135,.3)}
 .tab.off{background:#fff;color:#6B7280;border:1px solid #D1D5DB}
 .tab.off:hover{background:#F0F4FF;color:#003087;border-color:#003087}
-.years{display:flex;gap:4px;margin-top:6px}
-.yr{padding:4px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;border:1px solid #D1D5DB;background:#fff;color:#6B7280}
+.tab-fact.on{background:#FF6B00!important;box-shadow:0 2px 8px rgba(255,107,0,.3)!important}
+.years{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.yr{padding:4px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;border:1px solid #D1D5DB;background:#fff;color:#6B7280;transition:all .15s}
 .yr.on{background:#FF6B00;color:#fff;border-color:#FF6B00;box-shadow:0 2px 6px rgba(255,107,0,.35)}
 .yr:hover:not(.on){background:#FFF4ED;border-color:#FF6B00;color:#FF6B00}
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
@@ -39,12 +32,14 @@ h1{font-size:20px;font-weight:900;letter-spacing:-.5px;color:#003087}
 .card{background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .card-title{font-size:11px;color:#6B7280;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:10px}
 .proj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
-.proj-item{border-radius:10px;padding:10px 12px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.proj-item{border-radius:10px;padding:10px 12px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06);cursor:pointer;transition:transform .15s,box-shadow .15s}
+.proj-item:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.12)}
 .proj-name{font-size:13px;font-weight:800;margin-bottom:3px}
 .proj-rev{font-size:13px;font-weight:900}
 .proj-vol{font-size:10px;color:#9CA3AF;margin-top:2px}
 .all-proj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.all-proj-item{border-radius:10px;padding:10px 12px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.all-proj-item{border-radius:10px;padding:10px 12px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06);cursor:pointer;transition:transform .15s,box-shadow .15s}
+.all-proj-item:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
 .all-proj-name{font-size:13px;font-weight:800;margin-bottom:3px}
 .all-proj-desc{font-size:10px;color:#6B7280;line-height:1.4}
 .partner-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
@@ -58,7 +53,6 @@ h1{font-size:20px;font-weight:900;letter-spacing:-.5px;color:#003087}
 .tariff-group-title{font-size:11px;font-weight:800;margin-bottom:8px}
 .tariff-input-wrap{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:10px;padding:9px 12px;margin-bottom:6px;transition:all .15s}
 .tariff-input-wrap:focus-within{background:#FFF4ED;border-color:#FF6B00}
-.tariff-row{display:flex;justify-content:space-between;margin-bottom:3px}
 .tariff-label{font-size:11px;color:#6B7280;font-weight:600}
 .tariff-note{font-size:9px;color:#9CA3AF;font-style:italic;margin-bottom:3px}
 .tariff-input-row{display:flex;align-items:center;gap:6px}
@@ -68,11 +62,55 @@ h1{font-size:20px;font-weight:900;letter-spacing:-.5px;color:#003087}
 canvas{max-height:220px}
 section{display:none}
 section.active{display:block}
+
+/* Fact */
+.fact-status{padding:10px 14px;border-radius:10px;font-size:12px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fact-status.loading{background:#EEF2FF;border:1px solid #C7D2FE;color:#3B82F6}
+.fact-status.ok{background:#F0FDF4;border:1px solid #86EFAC;color:#16a34a}
+.fact-status.err{background:#FEF2F2;border:1px solid #FCA5A5;color:#dc2626}
+.fact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.fact-partner{border-radius:10px;padding:12px 14px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.fact-partner-name{font-size:13px;font-weight:800;color:#1A1A2E;margin-bottom:8px}
+.fact-bar-wrap{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.fact-bar-label{font-size:9px;color:#9CA3AF;width:28px;text-align:right;flex-shrink:0}
+.fact-bar-track{flex:1;height:6px;background:#F3F4F6;border-radius:3px;overflow:hidden}
+.fact-bar-fill{height:100%;border-radius:3px;transition:width .6s}
+.fact-bar-val{font-size:10px;font-weight:700;width:56px;flex-shrink:0;text-align:right}
+.fact-delta{font-size:11px;font-weight:900;margin-top:6px}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal{background:#fff;border-radius:16px;padding:24px;max-width:540px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2);transform:translateY(16px);transition:transform .2s}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:12px}
+.modal-title{font-size:17px;font-weight:900}
+.modal-close{background:none;border:none;cursor:pointer;font-size:20px;color:#9CA3AF;flex-shrink:0;line-height:1;padding:0}
+.modal-desc{font-size:14px;color:#374151;line-height:1.6;margin-bottom:16px;background:#F9FAFB;border-radius:10px;padding:14px}
+.modal-kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.modal-kpi-item{border-radius:8px;padding:10px 12px}
+.modal-kpi-label{font-size:9px;color:#9CA3AF;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.modal-kpi-val{font-size:15px;font-weight:900}
+
+/* Export */
+.export-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.btn-export{padding:7px 14px;border-radius:8px;border:none;cursor:pointer;font-size:12px;font-weight:700;transition:all .2s;display:flex;align-items:center;gap:5px}
+.btn-export:hover{transform:translateY(-1px);opacity:.9}
+.btn-pdf{background:#EF4444;color:#fff;box-shadow:0 2px 6px rgba(239,68,68,.3)}
+.btn-xlsx{background:#16a34a;color:#fff;box-shadow:0 2px 6px rgba(22,163,74,.3)}
+.btn-refresh{background:#F0F4FF;color:#0050B3;border:1px solid #C7D2FE}
+.sync-info{font-size:10px;color:#9CA3AF;margin-left:auto}
+
+@media print{
+  .export-bar,.header .tabs,.years,.footer,.modal-overlay{display:none!important}
+  body{background:#fff;padding:8px}
+  canvas{max-height:180px}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="header" style="background:linear-gradient(135deg,#003087,#0050B3);padding:14px 18px;border-radius:14px;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,48,135,.25)">
+  <div class="header">
     <div style="display:flex;align-items:center;gap:10px">
       <span style="font-size:24px">📦</span>
       <div>
@@ -84,6 +122,7 @@ section.active{display:block}
       <div class="tabs" id="tabs">
         <button class="tab on" data-tab="projects">📁 Проекты</button>
         <button class="tab off" data-tab="partners">🤝 Партнёры</button>
+        <button class="tab off tab-fact" data-tab="fact">📊 Факт</button>
         <button class="tab off" data-tab="tariffs">💰 Тарифы</button>
       </div>
       <div class="years" id="years">
@@ -95,49 +134,64 @@ section.active{display:block}
     </div>
   </div>
 
+  <div class="export-bar">
+    <button class="btn-export btn-pdf" onclick="exportPDF()">🖨 PDF</button>
+    <button class="btn-export btn-xlsx" onclick="exportXLSX()">📥 Excel</button>
+    <button class="btn-export btn-refresh" onclick="loadFactData()">🔄 Обновить факт</button>
+    <span class="sync-info" id="sync-info"></span>
+  </div>
+
   <section id="sec-projects" class="active"></section>
   <section id="sec-partners"></section>
+  <section id="sec-fact"></section>
   <section id="sec-tariffs"></section>
 
   <div class="footer">
-    💡 <b style="color:#FF6B00">Проекты</b> — доход/объём по внутренним инициативам &nbsp;·&nbsp;
-    <b style="color:#10B981">Партнёры</b> — доход/объём по внешним клиентам &nbsp;·&nbsp;
+    💡 <b style="color:#FF6B00">Проекты</b> — доход по инициативам &nbsp;·&nbsp;
+    <b style="color:#10B981">Партнёры</b> — доход по клиентам &nbsp;·&nbsp;
+    <b style="color:#FF6B00">Факт</b> — реальные данные из Google Sheets &nbsp;·&nbsp;
     <b style="color:#f59e0b">Тарифы</b> — задайте свои цифры, всё пересчитается
   </div>
 </div>
 
-<script>
-const UZS = 12250;
-const fmtN = n => new Intl.NumberFormat("ru-RU",{maximumFractionDigits:0}).format(n);
-const fmtB = n => {
-  if(!n||isNaN(n)) return "0";
-  if(Math.abs(n)>=1e12) return (n/1e12).toFixed(2)+" трлн";
-  if(Math.abs(n)>=1e9)  return (n/1e9).toFixed(2)+" млрд";
-  if(Math.abs(n)>=1e6)  return (n/1e6).toFixed(1)+" млн";
-  return fmtN(n);
-};
-const fmtUSD = n => {
-  if(Math.abs(n)>=1e6) return "$"+(n/1e6).toFixed(2)+"M";
-  if(Math.abs(n)>=1e3) return "$"+(n/1e3).toFixed(1)+"K";
-  return "$"+fmtN(Math.round(n));
-};
+<!-- Modal -->
+<div class="modal-overlay" id="proj-modal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title"></div>
+      <button class="modal-close" onclick="document.getElementById('proj-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-desc" id="modal-desc"></div>
+    <div class="modal-kpi" id="modal-kpi"></div>
+  </div>
+</div>
 
-const PROJECTS = [
-  {key:"pvz",icon:"🏪",label:"Рыночный десант",desc:"Мобильные команды на рынках, B2C отправления",color:"#0050B3"},
-  {key:"pvznet",icon:"🔗",label:"Партнёрская программа ПВЗ",desc:"1600 ПВЗ как канал продаж",color:"#3B82F6"},
-  {key:"operators",icon:"👥",label:"Операторы = менеджеры",desc:"МЛМ-мотивация сотрудников отделений",color:"#7dd3fc"},
-  {key:"b2bfull",icon:"📦",label:"Доставка до маркетплейса",desc:"B2B фулфилмент FBO/FBS",color:"#22c55e"},
-  {key:"multipvz",icon:"🏬",label:"Мультибрендовые ПВЗ",desc:"Одно окно для всего e-commerce",color:"#4ade80"},
-  {key:"courier",icon:"🛵",label:"Курьерская служба",desc:"Коммерческая курьерка +20–40% оборот",color:"#86efac"},
-  {key:"postamat",icon:"🤖",label:"Почтомат",desc:"Автоматизированные терминалы 24/7",color:"#FF6B00"},
-  {key:"franchise",icon:"🏢",label:"Франшиза UzPost",desc:"Расширение сети за счёт частных инвестиций",color:"#fbbf24"},
-  {key:"dropship",icon:"🌐",label:"Дропшип",desc:"Международные объёмы через виртуальные хабы",color:"#c084fc"},
-  {key:"remail",icon:"📬",label:"Ремейлинг",desc:"Транзит, открытие МОЗГР за рубежом",color:"#a78bfa"},
-  {key:"transit",icon:"🚛",label:"Транзит",desc:"Физический транзит грузов",color:"#f43f5e"},
-  {key:"rent",icon:"🏗",label:"Аренда помещений",desc:"Монетизация незадействованных площадей",color:"#9CA3AF"},
+<script>
+const SHEET_ID = "1IsHs0wI15fxkdmr6ylqsZEDjVsfTX2ckowztJNLVr4Y";
+const SVC_EMAIL = "uzpost-sheets@universal-ion-489917-u2.iam.gserviceaccount.com";
+const PRIV_KEY = "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDTaUezV/wk6r86\njf/3SC95oKMpE+DjzU2MVO4bWO+oeAfUgaQ70p5DA+xO4ywLw5qw+v6prr+bnb20\nZf1fbT/B/hGO7H5z8m+0b3oDq9ocW0+x3kPtCud4R7zJWM6SfsBeVG8akyBd1sNj\n+62HKPxxbGy+48BBHd45s5/Fcu3QHih3OJHNx95e/h+EFgMqsuHcKQZOpQi3bkzn\nzdJBuFt5aAauNL4ksTJt35XBRtolT7/CVYKIt1Yj36HaUoe60Uy+jDF0Ow6sQzdq\nZbW2JMXU9kXl+in7W0Mistnj8LOSf6QIW1bxqlJXrSx9ouhvHCYb7/W2v44d+yqz\nFLaqO8cTAgMBAAECggEADG1OLf2dsFyC0cyntNUabU+C/RbSYQb1aFVUYGkm6pk7\npJiGReSd3ESZGb4CyHeUBT6LxP+k+wnCV/NSzyQwhj+1WoMOSn8qunQpu5jYy6fr\nvwHYrlC2GyePB6rftv7FDLEb4s0D2bWWa1nPm81N9tYvwjzIVUuN1N3Oe3XDrY2s\n3WwRu8Kr8e1uGlCyYVn9Vr7H3ZYkpxK7vSeh5JiXSk4ugMCmPqXYJ8467MQ7n9v4\nFBNG8N1JRANGHW9FKvHmI/6svIuAkxmBXl1HBprYNEic+5sK3riCsjnjvfqR9Nws\nhLFfJZFSb2+uptmQcZgCC+u8pIkHatdKaODbISocIQKBgQD383JzpxI9E90jEC26\n2b/lmZemfqxtC+uDI20oY3kxcfahZ7IjptNfd3xfgL9KWtZpXNQUKF7B74FVEFh6\n4VyjWqHHOHKCYFw6qX6gyYG7LYLCbcjTxVYBw1to/e6tL2hJ725ebyZgnJI3V6Yd\nQbFk0S5hYKgZaUlqB4F0JevAcQKBgQDaRi0WeeHL9f/eRxvqK8FMh+/liUOphaxg\n0p5DNHLfUgQ0GrrBs5Oyjnkuei2liYJ9cicCZxCZ91QUbxC3C0TgSagieLovqj0J\nCKxsAhDKbfs3KqmKjC9hk1A4zGzAzdnKhd85v7AL/vfopFhTFf7WNRWr+b5Stmtc\nq0UFjkPBwwKBgEqpPa9hgXZuwsnKF1sKMmRaiXWS8yyqyDHmuvnMajPfUxpq9RMT\nKta2Tfcb933WOHXlg97GATJ4ggMxNtNZhOGTat9oOeLUTTFE1GJqCuxn2dXd5PkP\nlMRXJPFKdVIk0kxhEmTRJ0c0HjsX42cv3tCyxDqCNlvgfkC1Hd/xgzmhAoGBAMKk\n1cw3QB2r71H+Q2xdPHDMwCcGcuoXJBLrfuobOVzgPJNiSqw1QT53QqUpms8FgvHu\n+85uriU+oyHdsSAp0m/X/zFOS2n5+5e0vl1KskJyNRWK28mLHS18OouL8Gc2qkKp\ngthykcEAy34QIBtnf+rxR7Qmb4w+1Bq9OD2uEcoVAoGBAMdLo+ntrNuwAXKl71AZ\nF2XFPzCMg3KY5i0S1z5zfjOr1up1kCLOdhfrpbs5KMlzNtO2gQMjQy8DASDVhiY2\nFoUAVEgFnbzYpx89beTl3KGPMwMnmB5eWP3xcWTJhK9PUKg+YGm27iZVacPgJtuU\nl7zYEvqSTKhwjuFNmOUPRr6e\n-----END PRIVATE KEY-----\n";
+
+const UZS=12250;
+const fmtN=n=>new Intl.NumberFormat("ru-RU",{maximumFractionDigits:0}).format(n);
+const fmtB=n=>{if(!n||isNaN(n))return"0";if(Math.abs(n)>=1e12)return(n/1e12).toFixed(2)+" трлн";if(Math.abs(n)>=1e9)return(n/1e9).toFixed(2)+" млрд";if(Math.abs(n)>=1e6)return(n/1e6).toFixed(1)+" млн";return fmtN(n);};
+const fmtUSD=n=>{if(Math.abs(n)>=1e6)return"$"+(n/1e6).toFixed(2)+"M";if(Math.abs(n)>=1e3)return"$"+(n/1e3).toFixed(1)+"K";return"$"+fmtN(Math.round(n));};
+
+const PROJECTS=[
+  {key:"pvz",icon:"🏪",label:"Рыночный десант",color:"#0050B3",desc:"Формирование мобильных команд менеджеров по продажам для постоянной дислокации на рынках электроники и бытовой техники в Ташкент и регионах с целью привлечения отправителей и увеличения объемов доставки по республике и за рубеж."},
+  {key:"pvznet",icon:"🔗",label:"Партнёрская программа ПВЗ",color:"#3B82F6",desc:"Стимулировать каждое ПВЗ привлекать новых отправителей и наращивать обороты, получая прямую финансовую выгоду от привлечённых объемов."},
+  {key:"operators",icon:"👥",label:"Операторы = менеджеры",color:"#7dd3fc",desc:"Каждый оператор отделения становится не только исполнителем, но и активным менеджером по привлечению клиентов и объёмов доставки, получая личную финансовую выгоду от привлечённых отправителей и их оборота."},
+  {key:"b2bfull",icon:"📦",label:"Доставка до маркетплейса",color:"#22c55e",desc:"Организация регулярной B2B-доставки от продавцов (рынки, магазины, интернет-селлеры) до складов маркетплейсов (FBO/FBS), с консолидацией, маркировкой и полным сопровождением."},
+  {key:"multipvz",icon:"🏬",label:"Мультибрендовые ПВЗ",color:"#4ade80",desc:"Создание формата ПВЗ, которые работают как единая логистическая точка для нескольких маркетплейсов, интернет-магазинов и B2B-клиентов — «одно окно для всей e-commerce логистики»."},
+  {key:"courier",icon:"🛵",label:"Курьерская служба",color:"#86efac",desc:"Переход от «доставки по необходимости» к регулярной коммерческой модели. Усиление сегмента интернет-магазинов и маркетплейсов. Конкуренция с частными курьерскими службами."},
+  {key:"postamat",icon:"🤖",label:"Почтомат",color:"#FF6B00",desc:"Автоматизированный почтомат для самостоятельного получения и отправки заказов интернет-магазинов, работающий круглосуточно без участия персонала."},
+  {key:"franchise",icon:"🏢",label:"Франшиза UzPost",color:"#fbbf24",desc:"Франшиза UzPost — это программа, в рамках которой национальный почтовый оператор Узбекистана будет продавать предпринимателям право на открытие почтовых отделений под своим брендом для расширения сети и повышения доступности услуг. Проект направлен на модернизацию инфраструктуры за счёт частных инвестиций на фоне роста электронной коммерции."},
+  {key:"dropship",icon:"🌐",label:"Дропшип (iHerb)",color:"#c084fc",desc:"Привлечение международных объёмов, без официального выхода на Узбекский рынок и регистрацию. Консолидатор объёмов на виртуальных хабах за границей."},
+  {key:"remail",icon:"📬",label:"Ремейлинг",color:"#a78bfa",desc:"Привлечение международных объёмов, без официального выхода на Узбекский рынок и Регистрацию. Консолидатор объёмов на виртуальных хабах за границей."},
+  {key:"transit",icon:"🚛",label:"Транзит",color:"#f43f5e",desc:"Транзит без заезда на территорию Узбекистана. Физический транзит грузов через Узбекистан в рамках международных соглашений."},
+  {key:"rent",icon:"🏗",label:"Аренда помещений",color:"#9CA3AF",desc:"Сдавать в аренду помещения (часть помещений) которые не задействованы на данный момент."},
 ];
 
-const PARTNERS = [
+const PARTNERS=[
   {name:"Uzum",service:"Доставка + выдача ПВЗ",status:"Запущен"},
   {name:"Ozon",service:"Доставка + выдача ПВЗ",status:"Запущен"},
   {name:"BirQadam",service:"Доставка до ПВЗ",status:"Запущен"},
@@ -159,7 +213,7 @@ const PARTNERS = [
   {name:"Transasia Logistics",service:"BirQadam",status:"Обсуждение"},
 ];
 
-let T = {
+let T={
   pvzTariff:15000,pvzGrowth:10,pvzStart:9000,
   b2bfullTariff:22000,b2bfullGrowth:15,b2bfullStart:5000,
   courierTariff:25000,courierGrowth:20,courierStart:3000,
@@ -172,10 +226,10 @@ let T = {
   tC2CRF:0,tExzap:12000,tAmway:0,tWB:0,tLetters:9500,tHybrid:9850,tTransasia:0,
 };
 
-const MONTHS36 = Array.from({length:36},(_,i)=>i);
-const ML = MONTHS36.map(i=>new Date(2025,i,1).toLocaleString("ru-RU",{month:"short",year:"2-digit"}));
+const M36=Array.from({length:36},(_,i)=>i);
+const ML=M36.map(i=>new Date(2025,i,1).toLocaleString("ru-RU",{month:"short",year:"2-digit"}));
 
-function calcProj(m) {
+function calcProj(m){
   const g=(b,r)=>b*Math.pow(1+r/100,m);
   const pvz=g(T.pvzStart,T.pvzGrowth)*T.pvzTariff;
   const b2bfull=g(T.b2bfullStart,T.b2bfullGrowth)*T.b2bfullTariff;
@@ -184,7 +238,7 @@ function calcProj(m) {
   const remail=g(T.remailStart,T.remailGrowth)*T.remailUSD*UZS;
   const transit=g(T.transitStart,T.transitGrowth)*T.transitUSD*UZS;
   const rent=g(T.rentStart,T.rentGrowth)*T.rentMonthly;
-  return {pvz,b2bfull,courier,dropship,remail,transit,rent,
+  return{pvz,b2bfull,courier,dropship,remail,transit,rent,
     pvzVol:Math.round(g(T.pvzStart,T.pvzGrowth)),
     courierVol:Math.round(g(T.courierStart,T.courierGrowth)),
     dropshipVol:Math.round(g(T.dropshipStart,T.dropshipGrowth)),
@@ -194,233 +248,311 @@ function calcProj(m) {
     total:pvz+b2bfull+courier+dropship+remail+transit+rent};
 }
 
-function calcPart(m) {
+function calcPart(m){
   const base={uzum:129036,ozon:11353,birqadam:86983,makeup:3789,yandex:17500,avito:2000,letters:327070,hybrid:3524336,exzap:10};
   const g=(b,r=10)=>b*Math.pow(1+r/100,m);
   const uzum=g(base.uzum)*T.tUzum,ozon=g(base.ozon)*T.tOzon,birqadam=g(base.birqadam)*T.tBirQadam;
   const makeup=g(base.makeup,3)*T.tMakeUp,yandex=g(base.yandex)*T.tYandex,avito=g(base.avito,15)*T.tAvito;
   const letters=g(base.letters,3)*T.tLetters,hybrid=g(base.hybrid,5)*T.tHybrid,exzap=g(base.exzap,10)*T.tExzap;
-  return {uzum,ozon,birqadam,makeup,yandex,avito,letters,hybrid,exzap,
+  return{uzum,ozon,birqadam,makeup,yandex,avito,letters,hybrid,exzap,
     uzumVol:Math.round(g(base.uzum)),birqadamVol:Math.round(g(base.birqadam)),
     total:uzum+ozon+birqadam+makeup+yandex+avito+letters+hybrid+exzap};
 }
 
-const projRows = MONTHS36.map(m=>calcProj(m));
-const partRows = MONTHS36.map(m=>calcPart(m));
+const projRows=M36.map(m=>calcProj(m));
+const partRows=M36.map(m=>calcPart(m));
 
 const PROJ_COLORS={pvz:"#0050B3",b2bfull:"#22c55e",courier:"#86efac",dropship:"#c084fc",remail:"#a78bfa",transit:"#f43f5e",rent:"#94a3b8"};
 const PROJ_RU={pvz:"Рыночный десант",b2bfull:"Доставка до МП",courier:"Курьерская",dropship:"Дропшип",remail:"Ремейлинг",transit:"Транзит",rent:"Аренда"};
 const PART_COLORS={uzum:"#0050B3",ozon:"#3B82F6",birqadam:"#4ade80",makeup:"#86efac",yandex:"#FF6B00",avito:"#fb923c",letters:"#64748b",hybrid:"#475569"};
 const PART_RU={uzum:"Uzum",ozon:"Ozon",birqadam:"BirQadam",makeup:"MakeUp",yandex:"Yandex",avito:"Avito",letters:"Письма",hybrid:"Гибридка"};
 
-let activeTab="projects", activeYr="all";
+let activeTab="projects",activeYr="all";
 const charts={};
+let factData=null,factLoaded=false,factErr=null;
 
-function getRows(rows) {
-  if(activeYr==="all") return rows;
-  const yr=parseInt(activeYr);
-  return rows.slice(yr*12,(yr+1)*12);
+function getRows(rows){if(activeYr==="all")return rows;const yr=parseInt(activeYr);return rows.slice(yr*12,(yr+1)*12);}
+function getLabels(){if(activeYr==="all")return ML;const yr=parseInt(activeYr);return ML.slice(yr*12,(yr+1)*12);}
+function getAnnual(rows,keys){return[0,1,2].map(yr=>({label:String(2025+yr),...Object.fromEntries(keys.map(k=>[k,rows.slice(yr*12,(yr+1)*12).reduce((a,r)=>a+r[k],0)]))}));}
+function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
+
+function makeLineChart(id,labels,datasets){
+  destroyChart(id);const ctx=document.getElementById(id);if(!ctx)return;
+  charts[id]=new Chart(ctx,{type:'line',data:{labels,datasets:datasets.map(d=>({...d,fill:true,tension:.4,borderWidth:2,pointRadius:0}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#6B7280",font:{size:10},boxWidth:12}}},scales:{x:{ticks:{color:"#9CA3AF",font:{size:9},maxTicksLimit:activeYr==="all"?9:6},grid:{color:"#E5E7EB"}},y:{ticks:{color:"#9CA3AF",font:{size:9},callback:v=>v>=1e9?(v/1e9).toFixed(1)+"млрд":v>=1e6?(v/1e6).toFixed(0)+"млн":""},grid:{color:"#E5E7EB"},stacked:true}}}});
 }
-function getLabels() {
-  if(activeYr==="all") return ML;
-  const yr=parseInt(activeYr);
-  return ML.slice(yr*12,(yr+1)*12);
+function makeBarChart(id,labels,datasets){
+  destroyChart(id);const ctx=document.getElementById(id);if(!ctx)return;
+  charts[id]=new Chart(ctx,{type:'bar',data:{labels,datasets:datasets.map(d=>({...d,borderWidth:0}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#6B7280",font:{size:10},boxWidth:12}}},scales:{x:{ticks:{color:"#9CA3AF",font:{size:activeYr==="all"?12:9,weight:"bold"}},grid:{display:false}},y:{ticks:{color:"#9CA3AF",font:{size:9},callback:v=>v>=1e9?(v/1e9).toFixed(1)+"млрд":v>=1e6?(v/1e6).toFixed(0)+"млн":""},grid:{color:"#E5E7EB"},stacked:true}}}});
 }
-function getAnnual(rows, keys) {
-  return [0,1,2].map(yr=>({
-    label:String(2025+yr),
-    ...Object.fromEntries(keys.map(k=>[k,rows.slice(yr*12,(yr+1)*12).reduce((a,r)=>a+r[k],0)]))
-  }));
+function statusColor(s){if(s==="Запущен")return"#22c55e";if(s==="Интеграция")return"#FF6B00";if(s.includes("без интеграции"))return"#fb923c";return"#475569";}
+
+// ===== MODAL =====
+function openProjectModal(key){
+  const p=PROJECTS.find(x=>x.key===key);if(!p)return;
+  const rows=getRows(projRows);
+  const yrLabel=activeYr==="all"?"3 года":String(2025+parseInt(activeYr));
+  const rev=rows.reduce((a,r)=>a+(r[key]||0),0);
+  document.getElementById("modal-title").innerHTML=`<span style="color:${p.color}">${p.icon} ${p.label}</span>`;
+  document.getElementById("modal-desc").textContent=p.desc;
+  document.getElementById("modal-kpi").innerHTML=`
+    <div class="modal-kpi-item" style="background:${p.color}10;border:1px solid ${p.color}30">
+      <div class="modal-kpi-label">Выручка · ${yrLabel}</div>
+      <div class="modal-kpi-val" style="color:${p.color}">${fmtB(rev)} сум</div>
+    </div>
+    <div class="modal-kpi-item" style="background:${p.color}10;border:1px solid ${p.color}30">
+      <div class="modal-kpi-label">USD · ${yrLabel}</div>
+      <div class="modal-kpi-val" style="color:${p.color}">${fmtUSD(rev/UZS)}</div>
+    </div>`;
+  document.getElementById("proj-modal").classList.add("open");
+}
+function closeModal(e){if(e.target.id==="proj-modal")document.getElementById("proj-modal").classList.remove("open");}
+
+// ===== GOOGLE SHEETS =====
+async function getToken(){
+  const hdr=btoa(JSON.stringify({alg:"RS256",typ:"JWT"})).replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_");
+  const now=Math.floor(Date.now()/1000);
+  const clm=btoa(JSON.stringify({iss:SVC_EMAIL,scope:"https://www.googleapis.com/auth/spreadsheets.readonly",aud:"https://oauth2.googleapis.com/token",exp:now+3600,iat:now})).replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_");
+  const unsigned=hdr+"."+clm;
+  const pem=PRIV_KEY.replace("-----BEGIN PRIVATE KEY-----","").replace("-----END PRIVATE KEY-----","").replace(/\n/g,"").trim();
+  const der=Uint8Array.from(atob(pem),c=>c.charCodeAt(0));
+  const ck=await crypto.subtle.importKey("pkcs8",der.buffer,{name:"RSASSA-PKCS1-v1_5",hash:"SHA-256"},false,["sign"]);
+  const sig=await crypto.subtle.sign("RSASSA-PKCS1-v1_5",ck,new TextEncoder().encode(unsigned));
+  const sb=btoa(String.fromCharCode(...new Uint8Array(sig))).replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_");
+  const jwt=unsigned+"."+sb;
+  const r=await fetch("https://oauth2.googleapis.com/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:`grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=${jwt}`});
+  const d=await r.json();
+  if(!d.access_token)throw new Error(JSON.stringify(d));
+  return d.access_token;
 }
 
-function destroyChart(id) {
-  if(charts[id]) { charts[id].destroy(); delete charts[id]; }
+async function fetchRange(token,range){
+  const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(range)}`,{headers:{Authorization:"Bearer "+token}});
+  const d=await r.json();
+  if(d.error)throw new Error(d.error.message);
+  return d.values||[];
 }
 
-function makeLineChart(canvasId, labels, datasets) {
-  destroyChart(canvasId);
-  const ctx = document.getElementById(canvasId);
-  if(!ctx) return;
-  charts[canvasId] = new Chart(ctx, {
-    type:'line',
-    data:{labels, datasets: datasets.map(d=>({...d,fill:true,tension:.4,borderWidth:2,pointRadius:0}))},
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:"#6B7280",font:{size:10},boxWidth:12}}},
-      scales:{
-        x:{ticks:{color:"#9CA3AF",font:{size:9},maxTicksLimit:activeYr==="all"?9:6},grid:{color:"#E5E7EB"}},
-        y:{ticks:{color:"#9CA3AF",font:{size:9},callback:v=>v>=1e9?(v/1e9).toFixed(1)+"млрд":v>=1e6?(v/1e6).toFixed(0)+"млн":""},grid:{color:"#E5E7EB"},stacked:true}
-      }
+function parseNum(v){if(!v)return 0;const n=parseFloat((v+"").replace(/\s/g,"").replace(",","."));return isNaN(n)?0:n;}
+
+async function loadFactData(){
+  document.getElementById("sync-info").textContent="⏳ Загружаем...";
+  try{
+    const token=await getToken();
+    // Fetch rows 1-30 of "Факт продаж" sheet
+    const rows=await fetchRange(token,"Факт продаж!A1:O30");
+    factData={};
+    let inSecondTable=false;
+    for(let i=1;i<rows.length;i++){
+      const row=rows[i];
+      if(!row||!row[1])continue;
+      const name=(row[1]||"").trim();
+      if(!name||name==="Наименование")continue;
+      // Skip empty rows / separators
+      const months=[];
+      for(let m=2;m<=13;m++) months.push(parseNum(row[m]));
+      const total=row[14]?parseNum(row[14]):months.reduce((a,b)=>a+b,0);
+      factData[name]={months,total};
     }
-  });
+    factLoaded=true;factErr=null;
+    document.getElementById("sync-info").textContent="✅ Факт обновлён: "+new Date().toLocaleTimeString("ru-RU");
+    if(activeTab==="fact")renderFact();
+  }catch(e){
+    factErr=e.message;factLoaded=false;
+    document.getElementById("sync-info").textContent="⚠️ Ошибка загрузки";
+    console.error(e);
+    if(activeTab==="fact")renderFact();
+  }
 }
 
-function makeBarChart(canvasId, labels, datasets) {
-  destroyChart(canvasId);
-  const ctx = document.getElementById(canvasId);
-  if(!ctx) return;
-  charts[canvasId] = new Chart(ctx, {
-    type:'bar',
-    data:{labels, datasets: datasets.map(d=>({...d,borderWidth:0}))},
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:"#6B7280",font:{size:10},boxWidth:12}}},
-      scales:{
-        x:{ticks:{color:"#9CA3AF",font:{size:activeYr==="all"?12:9,weight:"bold"}},grid:{display:false}},
-        y:{ticks:{color:"#9CA3AF",font:{size:9},callback:v=>v>=1e9?(v/1e9).toFixed(1)+"млрд":v>=1e6?(v/1e6).toFixed(0)+"млн":""},grid:{color:"#E5E7EB"},stacked:true}
-      }
-    }
-  });
-}
-
-function statusColor(s) {
-  if(s==="Запущен") return "#22c55e";
-  if(s==="Интеграция") return "#FF6B00";
-  if(s.includes("без интеграции")) return "#fb923c";
-  return "#475569";
-}
-
-function renderProjects() {
-  const rows = getRows(projRows);
-  const last = rows[rows.length-1];
-  const total = rows.reduce((a,r)=>a+r.total,0);
-  const yrLabel = activeYr==="all"?"3 года":String(2025+parseInt(activeYr));
-
-  const kpiData = [
+// ===== RENDER PROJECTS =====
+function renderProjects(){
+  const rows=getRows(projRows),last=rows[rows.length-1];
+  const total=rows.reduce((a,r)=>a+r.total,0);
+  const yrLabel=activeYr==="all"?"3 года":String(2025+parseInt(activeYr));
+  const kpi=[
     {label:`Выручка проекты · ${yrLabel}`,val:fmtB(total)+" сум",sub:fmtUSD(total/UZS),color:"#0050B3"},
     {label:"Последний месяц периода",val:fmtB(last.total)+" сум",sub:fmtUSD(last.total/UZS),color:"#22c55e"},
     {label:"Дропшип",val:fmtB(rows.reduce((a,r)=>a+r.dropship,0))+" сум",sub:`${fmtN(last.dropshipVol)} заказов/мес`,color:"#c084fc"},
     {label:"Ремейлинг",val:fmtB(rows.reduce((a,r)=>a+r.remail,0))+" сум",sub:`${fmtN(last.remailVol)} посылок/мес`,color:"#a78bfa"},
   ];
-
-  const projItems = [
-    {icon:"🏪",label:"Рыночный десант",rev:rows.reduce((a,r)=>a+r.pvz,0),vol:`${fmtN(last.pvzVol)} отпр./мес`,color:"#0050B3"},
-    {icon:"📦",label:"Доставка до МП",rev:rows.reduce((a,r)=>a+r.b2bfull,0),vol:`${fmtN(last.pvzVol)} отпр./мес`,color:"#22c55e"},
-    {icon:"🛵",label:"Курьерская служба",rev:rows.reduce((a,r)=>a+r.courier,0),vol:`${fmtN(last.courierVol)} отпр./мес`,color:"#86efac"},
-    {icon:"🌐",label:"Дропшип",rev:rows.reduce((a,r)=>a+r.dropship,0),vol:`${fmtN(last.dropshipVol)} заказов/мес`,color:"#c084fc"},
-    {icon:"📬",label:"Ремейлинг",rev:rows.reduce((a,r)=>a+r.remail,0),vol:`${fmtN(last.remailVol)} посылок/мес`,color:"#a78bfa"},
-    {icon:"🚛",label:"Транзит",rev:rows.reduce((a,r)=>a+r.transit,0),vol:`${fmtN(last.transitVol)} тонн/мес`,color:"#f43f5e"},
-    {icon:"🏗",label:"Аренда",rev:rows.reduce((a,r)=>a+r.rent,0),vol:`${fmtN(last.rentVol)} кв.м`,color:"#9CA3AF"},
-    {icon:"💰",label:"ИТОГО",rev:total,vol:"все проекты",color:"#0050B3",total:true},
+  const items=[
+    {icon:"🏪",label:"Рыночный десант",key:"pvz",rev:rows.reduce((a,r)=>a+r.pvz,0),vol:`${fmtN(last.pvzVol)} отпр./мес`,color:"#0050B3"},
+    {icon:"📦",label:"Доставка до МП",key:"b2bfull",rev:rows.reduce((a,r)=>a+r.b2bfull,0),vol:`${fmtN(last.pvzVol)} отпр./мес`,color:"#22c55e"},
+    {icon:"🛵",label:"Курьерская",key:"courier",rev:rows.reduce((a,r)=>a+r.courier,0),vol:`${fmtN(last.courierVol)} отпр./мес`,color:"#86efac"},
+    {icon:"🌐",label:"Дропшип",key:"dropship",rev:rows.reduce((a,r)=>a+r.dropship,0),vol:`${fmtN(last.dropshipVol)} заказов/мес`,color:"#c084fc"},
+    {icon:"📬",label:"Ремейлинг",key:"remail",rev:rows.reduce((a,r)=>a+r.remail,0),vol:`${fmtN(last.remailVol)} посылок/мес`,color:"#a78bfa"},
+    {icon:"🚛",label:"Транзит",key:"transit",rev:rows.reduce((a,r)=>a+r.transit,0),vol:`${fmtN(last.transitVol)} тонн/мес`,color:"#f43f5e"},
+    {icon:"🏗",label:"Аренда",key:"rent",rev:rows.reduce((a,r)=>a+r.rent,0),vol:`${fmtN(last.rentVol)} кв.м`,color:"#9CA3AF"},
+    {icon:"💰",label:"ИТОГО",key:null,rev:total,vol:"все проекты",color:"#0050B3"},
   ];
-
-  document.getElementById("sec-projects").innerHTML = `
-    <div class="kpi-grid">${kpiData.map(k=>`
-      <div class="kpi" style="background:${k.color}0d;border:1px solid ${k.color}25">
-        <div class="kpi-label">${k.label}</div>
-        <div class="kpi-val" style="color:${k.color}">${k.val}</div>
-        <div class="kpi-sub">${k.sub}</div>
-      </div>`).join("")}
-    </div>
+  document.getElementById("sec-projects").innerHTML=`
+    <div class="kpi-grid">${kpi.map(k=>`<div class="kpi" style="background:${k.color}0d;border:1px solid ${k.color}25"><div class="kpi-label">${k.label}</div><div class="kpi-val" style="color:${k.color}">${k.val}</div><div class="kpi-sub">${k.sub}</div></div>`).join("")}</div>
     <div class="chart-grid">
-      <div class="card"><div class="card-title">📈 Ежемесячная выручка — проекты · ${yrLabel}</div><div style="height:220px"><canvas id="c-proj-line"></canvas></div></div>
-      <div class="card"><div class="card-title">📊 ${activeYr==="all"?"Годовая выручка — проекты":"Месяцы "+yrLabel+" — проекты"}</div><div style="height:220px"><canvas id="c-proj-bar"></canvas></div></div>
+      <div class="card"><div class="card-title">📈 Ежемесячная выручка · ${yrLabel}</div><div style="height:220px"><canvas id="c-pl"></canvas></div></div>
+      <div class="card"><div class="card-title">📊 ${activeYr==="all"?"Годовая выручка":"Месяцы "+yrLabel}</div><div style="height:220px"><canvas id="c-pb"></canvas></div></div>
     </div>
     <div class="card" style="margin-bottom:14px">
-      <div class="card-title">📋 Все проекты — объём и доход · ${yrLabel}</div>
-      <div class="proj-grid">${projItems.map(p=>`
-        <div class="proj-item" style="background:${p.total?"rgba(14,165,233,0.1)":p.color+"08"};border:1px solid ${p.total?"rgba(14,165,233,0.3)":p.color+"25"}">
-          <div class="proj-name" style="color:${p.total?"#0050B3":p.color}">${p.icon} ${p.label}</div>
-          <div class="proj-rev" style="color:${p.total?"#0050B3":p.color}">${fmtB(p.rev)} сум</div>
-          <div class="proj-vol">${p.vol}</div>
-        </div>`).join("")}
-      </div>
+      <div class="card-title">📋 Все проекты · ${yrLabel} <span style="font-size:9px;color:#9CA3AF;text-transform:none;font-weight:400">👆 кликни для деталей</span></div>
+      <div class="proj-grid">${items.map(p=>`<div class="proj-item" style="background:${p.key?"":"rgba(14,165,233,0.1)"};background:${p.key?p.color+"08":"rgba(14,165,233,0.1)"};border:1px solid ${p.key?p.color+"25":"rgba(14,165,233,0.3)"}" ${p.key?`onclick="openProjectModal('${p.key}')"`:""}><div class="proj-name" style="color:${p.key?p.color:"#0050B3"}">${p.icon} ${p.label}</div><div class="proj-rev" style="color:${p.key?p.color:"#0050B3"}">${fmtB(p.rev)} сум</div><div class="proj-vol">${p.vol}</div></div>`).join("")}</div>
     </div>
     <div>
-      <div class="card-title" style="margin-bottom:10px">📁 Все проекты UzPost</div>
-      <div class="all-proj-grid">${PROJECTS.map(p=>`
-        <div class="all-proj-item" style="background:${p.color}08;border:1px solid ${p.color}25">
-          <div class="all-proj-name" style="color:${p.color}">${p.icon} ${p.label}</div>
-          <div class="all-proj-desc">${p.desc}</div>
-        </div>`).join("")}
+      <div class="card-title" style="margin-bottom:10px">📁 Все проекты UzPost <span style="font-size:9px;color:#9CA3AF;text-transform:none;font-weight:400">👆 кликни для деталей</span></div>
+      <div class="all-proj-grid">${PROJECTS.map(p=>`<div class="all-proj-item" style="background:${p.color}08;border:1px solid ${p.color}25" onclick="openProjectModal('${p.key}')"><div class="all-proj-name" style="color:${p.color}">${p.icon} ${p.label}</div><div class="all-proj-desc">${p.desc.substring(0,90)}${p.desc.length>90?"…":""}</div></div>`).join("")}
       </div>
     </div>`;
-
-  // Line chart
-  const labels = getLabels();
-  const lineDs = Object.entries(PROJ_COLORS).map(([k,c])=>({
-    label:PROJ_RU[k], data:rows.map(r=>r[k]||0),
-    borderColor:c, backgroundColor:c+"33", stack:"a"
-  }));
-  makeLineChart("c-proj-line", labels, lineDs);
-
-  // Bar chart
-  const barSrc = activeYr==="all" ? getAnnual(projRows,Object.keys(PROJ_COLORS)) : rows.map((r,i)=>({label:labels[i],...r}));
-  const barDs = Object.entries(PROJ_COLORS).map(([k,c])=>({
-    label:PROJ_RU[k], data:barSrc.map(r=>r[k]||0),
-    backgroundColor:c+"cc", stack:"a"
-  }));
-  makeBarChart("c-proj-bar", barSrc.map(r=>r.label||r.year||""), barDs);
+  const labels=getLabels();
+  makeLineChart("c-pl",labels,Object.entries(PROJ_COLORS).map(([k,c])=>({label:PROJ_RU[k],data:rows.map(r=>r[k]||0),borderColor:c,backgroundColor:c+"33",stack:"a"})));
+  const bs=activeYr==="all"?getAnnual(projRows,Object.keys(PROJ_COLORS)):rows.map((r,i)=>({label:labels[i],...r}));
+  makeBarChart("c-pb",bs.map(r=>r.label||""),Object.entries(PROJ_COLORS).map(([k,c])=>({label:PROJ_RU[k],data:bs.map(r=>r[k]||0),backgroundColor:c+"cc",stack:"a"})));
 }
 
-function renderPartners() {
-  const rows = getRows(partRows);
-  const last = rows[rows.length-1];
-  const total = rows.reduce((a,r)=>a+r.total,0);
-  const yrLabel = activeYr==="all"?"3 года":String(2025+parseInt(activeYr));
-
-  const kpiData = [
+// ===== RENDER PARTNERS =====
+function renderPartners(){
+  const rows=getRows(partRows),last=rows[rows.length-1];
+  const total=rows.reduce((a,r)=>a+r.total,0);
+  const yrLabel=activeYr==="all"?"3 года":String(2025+parseInt(activeYr));
+  const kpi=[
     {label:`Выручка партнёры · ${yrLabel}`,val:fmtB(total)+" сум",sub:fmtUSD(total/UZS),color:"#0050B3"},
     {label:"Последний месяц периода",val:fmtB(last.total)+" сум",sub:fmtUSD(last.total/UZS),color:"#22c55e"},
     {label:"Uzum отправлений/мес",val:fmtN(last.uzumVol)+" шт",sub:fmtB(last.uzum)+" сум",color:"#3B82F6"},
     {label:"BirQadam отправлений/мес",val:fmtN(last.birqadamVol)+" шт",sub:fmtB(last.birqadam)+" сум",color:"#4ade80"},
   ];
-
-  document.getElementById("sec-partners").innerHTML = `
-    <div class="kpi-grid">${kpiData.map(k=>`
-      <div class="kpi" style="background:${k.color}0d;border:1px solid ${k.color}25">
-        <div class="kpi-label">${k.label}</div>
-        <div class="kpi-val" style="color:${k.color}">${k.val}</div>
-        <div class="kpi-sub">${k.sub}</div>
-      </div>`).join("")}
-    </div>
+  document.getElementById("sec-partners").innerHTML=`
+    <div class="kpi-grid">${kpi.map(k=>`<div class="kpi" style="background:${k.color}0d;border:1px solid ${k.color}25"><div class="kpi-label">${k.label}</div><div class="kpi-val" style="color:${k.color}">${k.val}</div><div class="kpi-sub">${k.sub}</div></div>`).join("")}</div>
     <div class="chart-grid">
-      <div class="card"><div class="card-title">📈 Ежемесячная выручка — партнёры · ${yrLabel}</div><div style="height:220px"><canvas id="c-part-line"></canvas></div></div>
-      <div class="card"><div class="card-title">📊 ${activeYr==="all"?"Годовая выручка — партнёры":"Месяцы "+yrLabel+" — партнёры"}</div><div style="height:220px"><canvas id="c-part-bar"></canvas></div></div>
+      <div class="card"><div class="card-title">📈 Ежемесячная выручка · ${yrLabel}</div><div style="height:220px"><canvas id="c-ptl"></canvas></div></div>
+      <div class="card"><div class="card-title">📊 ${activeYr==="all"?"Годовая выручка":"Месяцы "+yrLabel}</div><div style="height:220px"><canvas id="c-ptb"></canvas></div></div>
     </div>
     <div class="card">
       <div class="card-title" style="margin-bottom:12px">🤝 Все партнёры — статус</div>
-      <div class="partner-grid">${PARTNERS.map(p=>{const sc=statusColor(p.status);return`
-        <div class="partner-item" style="background:${sc}08;border:1px solid ${sc}25">
-          <div class="partner-top">
-            <span class="partner-name">${p.name}</span>
-            <span class="partner-badge" style="background:${sc}20;border:1px solid ${sc}40;color:${sc}">${p.status}</span>
-          </div>
-          <div class="partner-svc">${p.service}</div>
-        </div>`}).join("")}
+      <div class="partner-grid">${PARTNERS.map(p=>{const sc=statusColor(p.status);return`<div class="partner-item" style="background:${sc}08;border:1px solid ${sc}25"><div class="partner-top"><span class="partner-name">${p.name}</span><span class="partner-badge" style="background:${sc}20;border:1px solid ${sc}40;color:${sc}">${p.status}</span></div><div class="partner-svc">${p.service}</div></div>`;}).join("")}</div>
+    </div>`;
+  const labels=getLabels();
+  makeLineChart("c-ptl",labels,Object.entries(PART_COLORS).map(([k,c])=>({label:PART_RU[k],data:rows.map(r=>r[k]||0),borderColor:c,backgroundColor:c+"33",stack:"a"})));
+  const bs=activeYr==="all"?getAnnual(partRows,Object.keys(PART_COLORS)):rows.map((r,i)=>({label:labels[i],...r}));
+  makeBarChart("c-ptb",bs.map(r=>r.label||""),Object.entries(PART_COLORS).map(([k,c])=>({label:PART_RU[k],data:bs.map(r=>r[k]||0),backgroundColor:c+"cc",stack:"a"})));
+}
+
+// ===== RENDER FACT =====
+function renderFact(){
+  const sec=document.getElementById("sec-fact");
+  if(!factLoaded&&!factErr){
+    sec.innerHTML=`<div class="fact-status loading">⏳ Загружаем данные из Google Sheets…</div>`;
+    return;
+  }
+  if(factErr){
+    sec.innerHTML=`
+      <div class="fact-status err">❌ Ошибка: ${factErr}
+        <button onclick="loadFactData()" style="margin-left:8px;padding:3px 10px;border-radius:6px;border:1px solid #FCA5A5;background:#fff;cursor:pointer;font-size:11px;color:#dc2626;font-weight:700">Повторить</button>
+      </div>
+      <div style="padding:20px;text-align:center;color:#9CA3AF;font-size:13px">
+        Убедитесь что таблица открыта для:<br><b style="color:#374151">uzpost-sheets@universal-ion-489917-u2.iam.gserviceaccount.com</b>
+      </div>`;
+    return;
+  }
+
+  const partners=Object.entries(factData).filter(([n,d])=>d.total>0);
+  const totalFact=partners.reduce((a,[,d])=>a+d.total,0);
+  const mnNames=["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"];
+  const monthTotals=mnNames.map((_,i)=>partners.reduce((a,[,d])=>a+(d.months[i]||0),0));
+  const filledMonths=monthTotals.filter(v=>v>0).length;
+
+  // Revenue calc
+  const tmap={Uzum:T.tUzum,Ozon:T.tOzon,BirQadam:T.tBirQadam,MakeUp:T.tMakeUp,Exzap:T.tExzap,Письма:T.tLetters,Гибридка:T.tHybrid,WB:T.tWB,Amway:T.tAmway};
+  const factRev=partners.reduce((a,[n,d])=>a+d.total*(tmap[n]||0),0);
+
+  // Plan for same period (Jan-Feb 2026 = months 12-13)
+  const planJan=partRows[12],planFeb=partRows[13];
+  const planJanTotal=planJan.uzum+planJan.ozon+planJan.birqadam+planJan.makeup+planJan.yandex+planJan.avito+planJan.letters+planJan.hybrid+planJan.exzap;
+  const planFebTotal=planFeb.uzum+planFeb.ozon+planFeb.birqadam+planFeb.makeup+planFeb.yandex+planFeb.avito+planFeb.letters+planFeb.hybrid+planFeb.exzap;
+  const planTotal2m=planJanTotal+planFebTotal;
+  const factTotal2m=(monthTotals[0]||0)+(monthTotals[1]||0);
+
+  sec.innerHTML=`
+    <div class="fact-status ok">✅ Данные загружены · ${partners.length} партнёров · ${filledMonths} мес. с данными</div>
+
+    <div class="kpi-grid">
+      <div class="kpi" style="background:#0050B310;border:1px solid #0050B325">
+        <div class="kpi-label">Факт отправлений 2026</div>
+        <div class="kpi-val" style="color:#0050B3">${fmtN(totalFact)} шт</div>
+        <div class="kpi-sub">${filledMonths} месяцев с данными</div>
+      </div>
+      <div class="kpi" style="background:#16a34a10;border:1px solid #16a34a25">
+        <div class="kpi-label">Выручка факт (тек. тарифы)</div>
+        <div class="kpi-val" style="color:#16a34a">${fmtB(factRev)} сум</div>
+        <div class="kpi-sub">${fmtUSD(factRev/UZS)}</div>
+      </div>
+      <div class="kpi" style="background:#FF6B0010;border:1px solid #FF6B0025">
+        <div class="kpi-label">Факт vs План янв+фев</div>
+        <div class="kpi-val" style="color:${factTotal2m>=planTotal2m?"#16a34a":"#FF6B00"}">${factTotal2m?Math.round(factTotal2m/Math.max(planTotal2m,1)*100):0}%</div>
+        <div class="kpi-sub">${fmtN(factTotal2m)} факт · ${fmtN(Math.round(planTotal2m))} план (шт)</div>
+      </div>
+      <div class="kpi" style="background:#c084fc10;border:1px solid #c084fc25">
+        <div class="kpi-label">Uzum + BirQadam факт</div>
+        <div class="kpi-val" style="color:#c084fc">${fmtN((factData["Uzum"]?.total||0)+(factData["BirQadam"]?.total||0))} шт</div>
+        <div class="kpi-sub">${fmtB(((factData["Uzum"]?.total||0)*T.tUzum)+((factData["BirQadam"]?.total||0)*T.tBirQadam))} сум</div>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="card"><div class="card-title">📊 Факт по месяцам 2026 — объём (шт)</div><div style="height:220px"><canvas id="c-fm"></canvas></div></div>
+      <div class="card"><div class="card-title">🔄 Факт по партнёрам янв+фев</div><div style="height:220px"><canvas id="c-fp"></canvas></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="margin-bottom:14px">📋 Детализация по партнёрам — факт 2026</div>
+      <div class="fact-grid">
+        ${partners.map(([name,d])=>{
+          const jan=d.months[0]||0,feb=d.months[1]||0;
+          const mx=Math.max(jan,feb,1);
+          const delta=jan>0&&feb>0?Math.round((feb-jan)/jan*100):null;
+          return`<div class="fact-partner">
+            <div class="fact-partner-name">${name}</div>
+            <div class="fact-bar-wrap">
+              <span class="fact-bar-label">Янв</span>
+              <div class="fact-bar-track"><div class="fact-bar-fill" style="width:${Math.min(100,jan/mx*100)}%;background:#0050B3"></div></div>
+              <span class="fact-bar-val" style="color:#0050B3">${fmtN(jan)}</span>
+            </div>
+            <div class="fact-bar-wrap">
+              <span class="fact-bar-label">Фев</span>
+              <div class="fact-bar-track"><div class="fact-bar-fill" style="width:${Math.min(100,feb/mx*100)}%;background:#FF6B00"></div></div>
+              <span class="fact-bar-val" style="color:#FF6B00">${fmtN(feb)}</span>
+            </div>
+            <div class="fact-delta" style="color:${delta===null?"#9CA3AF":delta>=0?"#16a34a":"#dc2626"}">
+              ${delta===null?"—":delta>=0?"📈 +"+delta+"%":"📉 "+delta+"%"} м/м
+            </div>
+          </div>`;
+        }).join("")}
       </div>
     </div>`;
 
-  const labels = getLabels();
-  const lineDs = Object.entries(PART_COLORS).map(([k,c])=>({
-    label:PART_RU[k], data:rows.map(r=>r[k]||0),
-    borderColor:c, backgroundColor:c+"33", stack:"a"
-  }));
-  makeLineChart("c-part-line", labels, lineDs);
+  // Monthly bar chart
+  const nzLabels=mnNames.filter((_,i)=>monthTotals[i]>0);
+  const nzVals=monthTotals.filter(v=>v>0);
+  if(nzVals.length){
+    destroyChart("c-fm");
+    const ctx=document.getElementById("c-fm");
+    if(ctx)charts["c-fm"]=new Chart(ctx,{type:"bar",data:{labels:nzLabels,datasets:[{label:"Объём (шт)",data:nzVals,backgroundColor:"#0050B3cc",borderRadius:6,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:"#9CA3AF",font:{size:11,weight:"bold"}},grid:{display:false}},y:{ticks:{color:"#9CA3AF",font:{size:9},callback:v=>fmtN(v)},grid:{color:"#E5E7EB"}}}}});
+  }
 
-  const barSrc = activeYr==="all" ? getAnnual(partRows,Object.keys(PART_COLORS)) : rows.map((r,i)=>({label:labels[i],...r}));
-  const barDs = Object.entries(PART_COLORS).map(([k,c])=>({
-    label:PART_RU[k], data:barSrc.map(r=>r[k]||0),
-    backgroundColor:c+"cc", stack:"a"
-  }));
-  makeBarChart("c-part-bar", barSrc.map(r=>r.label||r.year||""), barDs);
+  // Partners bar chart (jan+feb combined)
+  const topPartners=partners.filter(([,d])=>(d.months[0]||0)+(d.months[1]||0)>0).sort(([,a],[,b])=>(b.months[0]+b.months[1])-(a.months[0]+a.months[1])).slice(0,10);
+  if(topPartners.length){
+    destroyChart("c-fp");
+    const ctx2=document.getElementById("c-fp");
+    if(ctx2)charts["c-fp"]=new Chart(ctx2,{type:"bar",data:{
+      labels:topPartners.map(([n])=>n),
+      datasets:[
+        {label:"Январь",data:topPartners.map(([,d])=>d.months[0]||0),backgroundColor:"#0050B3cc",borderRadius:3,borderWidth:0},
+        {label:"Февраль",data:topPartners.map(([,d])=>d.months[1]||0),backgroundColor:"#FF6B00cc",borderRadius:3,borderWidth:0}
+      ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#6B7280",font:{size:10},boxWidth:12}}},scales:{x:{ticks:{color:"#9CA3AF",font:{size:9}},grid:{display:false}},y:{ticks:{color:"#9CA3AF",font:{size:9},callback:v=>fmtN(v)},grid:{color:"#E5E7EB"}}}}});
+  }
 }
 
-function tariffField(k, label, currency, note="") {
-  return `<div class="tariff-input-wrap">
-    <div class="tariff-row">
-      <span class="tariff-label">${label}</span>
-    </div>
-    ${note?`<div class="tariff-note">${note}</div>`:""}
-    <div class="tariff-input-row">
-      <input class="tariff-input" type="number" value="${T[k]}" data-key="${k}" onchange="updateT(this)"/>
-      <span class="tariff-cur">${currency}</span>
-    </div>
-  </div>`;
-}
-
-function renderTariffs() {
-  const groups = [
+// ===== RENDER TARIFFS =====
+function tariffField(k,l,c,n=""){return`<div class="tariff-input-wrap"><div class="tariff-label">${l}</div>${n?`<div class="tariff-note">${n}</div>`:""}<div class="tariff-input-row"><input class="tariff-input" type="number" value="${T[k]}" data-key="${k}" onchange="updateT(this)"/><span class="tariff-cur">${c}</span></div></div>`;}
+function renderTariffs(){
+  const groups=[
     {label:"🏪 Рыночный десант",color:"#0050B3",fields:[{k:"pvzTariff",l:"Тариф",c:"сум"},{k:"pvzStart",l:"Отправлений/мес",c:"шт"},{k:"pvzGrowth",l:"Рост м/м",c:"%"}]},
     {label:"📦 Доставка до маркетплейса",color:"#22c55e",fields:[{k:"b2bfullTariff",l:"Тариф",c:"сум"},{k:"b2bfullStart",l:"Отправлений/мес",c:"шт"},{k:"b2bfullGrowth",l:"Рост м/м",c:"%"}]},
     {label:"🛵 Курьерская служба",color:"#86efac",fields:[{k:"courierTariff",l:"Тариф",c:"сум"},{k:"courierStart",l:"Отправлений/мес",c:"шт"},{k:"courierGrowth",l:"Рост м/м",c:"%"}]},
@@ -429,65 +561,67 @@ function renderTariffs() {
     {label:"🚛 Транзит",color:"#f43f5e",fields:[{k:"transitUSD",l:"Тариф за тонну",c:"USD"},{k:"transitStart",l:"Тонн/мес",c:"т"},{k:"transitGrowth",l:"Рост м/м",c:"%"}]},
     {label:"🏗 Аренда",color:"#9CA3AF",fields:[{k:"rentMonthly",l:"Ставка аренды",c:"сум/кв.м"},{k:"rentStart",l:"Кв.м",c:"кв.м"},{k:"rentGrowth",l:"Рост м/м",c:"%"}]},
   ];
-
-  const partners = [
+  const pts=[
     {k:"tUzum",l:"Uzum",n:"Запущен"},{k:"tOzon",l:"Ozon",n:"Запущен"},{k:"tBirQadam",l:"BirQadam",n:"Запущен"},
     {k:"tMakeUp",l:"MakeUp",n:"Запущен"},{k:"tYandex",l:"Yandex Market",n:"Запущен"},{k:"tAvito",l:"Avito",n:"Интеграция"},
-    {k:"tIherb",l:"iHERB",n:"В обсуждении"},{k:"tGermany",l:"Германия",n:"В обсуждении"},{k:"tMoldova",l:"Молдова",n:"В обсуждении"},
-    {k:"tBelarus",l:"Беларусь",n:"В обсуждении"},{k:"tUzumGlobal",l:"UzumGlobal",n:"В обсуждении"},{k:"tYandexDel",l:"Yandex Доставка",n:"В обсуждении"},
-    {k:"tC2CRF",l:"С2С РФ – Узб",n:"В обсуждении"},{k:"tExzap",l:"Exzap",n:"Запущен"},{k:"tAmway",l:"Amway",n:"В обсуждении"},
+    {k:"tIherb",l:"iHERB",n:"Обсуждение"},{k:"tGermany",l:"Германия",n:"Обсуждение"},{k:"tMoldova",l:"Молдова",n:"Обсуждение"},
+    {k:"tBelarus",l:"Беларусь",n:"Обсуждение"},{k:"tUzumGlobal",l:"UzumGlobal",n:"Обсуждение"},{k:"tYandexDel",l:"Yandex Доставка",n:"Обсуждение"},
+    {k:"tC2CRF",l:"С2С РФ – Узб",n:"Обсуждение"},{k:"tExzap",l:"Exzap",n:"Запущен"},{k:"tAmway",l:"Amway",n:"Обсуждение"},
     {k:"tWB",l:"WB",n:"Запущен (без интеграции)"},{k:"tLetters",l:"Письма",n:"Запущен"},{k:"tHybrid",l:"Гибридка",n:"Запущен"},
-    {k:"tTransasia",l:"Transasia Logistics",n:"В обсуждении"},
+    {k:"tTransasia",l:"Transasia Logistics",n:"Обсуждение"},
   ];
-
-  document.getElementById("sec-tariffs").innerHTML = `
+  document.getElementById("sec-tariffs").innerHTML=`
     <div class="tariff-grid">
       <div>
         <div class="card-title" style="margin-bottom:8px">📁 Тарифы проектов</div>
-        ${groups.map(g=>`
-          <div class="tariff-group" style="border-left:3px solid ${g.color}">
-            <div class="tariff-group-title" style="color:${g.color}">${g.label}</div>
-            ${g.fields.map(f=>tariffField(f.k,f.l,f.c)).join("")}
-          </div>`).join("")}
+        ${groups.map(g=>`<div class="tariff-group" style="border-left:3px solid ${g.color}"><div class="tariff-group-title" style="color:${g.color}">${g.label}</div>${g.fields.map(f=>tariffField(f.k,f.l,f.c)).join("")}</div>`).join("")}
       </div>
       <div>
         <div class="card-title" style="margin-bottom:8px">🤝 Тарифы партнёров (сум за отправление)</div>
-        <div class="card">
-          ${partners.map(p=>tariffField(p.k,p.l,"сум",p.n)).join("")}
-        </div>
+        <div class="card">${pts.map(p=>tariffField(p.k,p.l,"сум",p.n)).join("")}</div>
       </div>
     </div>`;
 }
 
-function updateT(el) {
-  T[el.dataset.key] = parseFloat(el.value)||0;
-  // Recalculate
-  MONTHS36.forEach(m=>{ Object.assign(projRows[m],calcProj(m)); Object.assign(partRows[m],calcPart(m)); });
+function updateT(el){
+  T[el.dataset.key]=parseFloat(el.value)||0;
+  M36.forEach(m=>{Object.assign(projRows[m],calcProj(m));Object.assign(partRows[m],calcPart(m));});
   render();
 }
 
-function render() {
-  if(activeTab==="projects") renderProjects();
-  else if(activeTab==="partners") renderPartners();
+// ===== EXPORT =====
+function exportPDF(){window.print();}
+function exportXLSX(){
+  const wb=XLSX.utils.book_new();
+  const ph=["Месяц","Рыночный десант","Доставка до МП","Курьерская","Дропшип","Ремейлинг","Транзит","Аренда","ИТОГО"];
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([ph,...M36.map((m,i)=>{const r=projRows[m];return[ML[i],Math.round(r.pvz),Math.round(r.b2bfull),Math.round(r.courier),Math.round(r.dropship),Math.round(r.remail),Math.round(r.transit),Math.round(r.rent),Math.round(r.total)];})]),`Проекты (прогноз)`);
+  const pth=["Месяц","Uzum","Ozon","BirQadam","MakeUp","Yandex","Avito","Письма","Гибридка","ИТОГО"];
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([pth,...M36.map((m,i)=>{const r=partRows[m];return[ML[i],Math.round(r.uzum),Math.round(r.ozon),Math.round(r.birqadam),Math.round(r.makeup),Math.round(r.yandex),Math.round(r.avito),Math.round(r.letters),Math.round(r.hybrid),Math.round(r.total)];})]),`Партнёры (прогноз)`);
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Год","Проекты (сум)","Партнёры (сум)","Всего (сум)","Всего ($)"],...[0,1,2].map(yr=>{const ps=projRows.slice(yr*12,(yr+1)*12).reduce((a,r)=>a+r.total,0);const pt=partRows.slice(yr*12,(yr+1)*12).reduce((a,r)=>a+r.total,0);return[2025+yr,Math.round(ps),Math.round(pt),Math.round(ps+pt),Math.round((ps+pt)/UZS)];})]),"Итоги по годам");
+  if(factLoaded&&factData)XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Партнёр","Янв","Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек","ИТОГО"],...Object.entries(factData).map(([n,d])=>[n,...d.months,d.total])]),"Факт 2026");
+  XLSX.writeFile(wb,`UzPost_${new Date().toISOString().slice(0,10)}.xlsx`);
+}
+
+// ===== MAIN =====
+function render(){
+  if(activeTab==="projects")renderProjects();
+  else if(activeTab==="partners")renderPartners();
+  else if(activeTab==="fact")renderFact();
   else renderTariffs();
 }
 
-// Tab switching
 document.getElementById("tabs").addEventListener("click",e=>{
-  const btn=e.target.closest("[data-tab]");
-  if(!btn) return;
+  const btn=e.target.closest("[data-tab]");if(!btn)return;
   activeTab=btn.dataset.tab;
-  document.querySelectorAll(".tab").forEach(b=>b.className="tab off");
-  btn.className="tab on";
+  document.querySelectorAll(".tab").forEach(b=>{b.className="tab off"+(b.dataset.tab==="fact"?" tab-fact":"");});
+  btn.className="tab on"+(activeTab==="fact"?" tab-fact":"");
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
   document.getElementById("sec-"+activeTab).classList.add("active");
   render();
 });
 
-// Year switching
 document.getElementById("years").addEventListener("click",e=>{
-  const btn=e.target.closest("[data-yr]");
-  if(!btn) return;
+  const btn=e.target.closest("[data-yr]");if(!btn)return;
   activeYr=btn.dataset.yr;
   document.querySelectorAll(".yr").forEach(b=>b.className="yr off");
   btn.className="yr on";
@@ -495,6 +629,7 @@ document.getElementById("years").addEventListener("click",e=>{
 });
 
 render();
+loadFactData();
 </script>
 </body>
 </html>
