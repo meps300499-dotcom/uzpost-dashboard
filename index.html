@@ -6,55 +6,65 @@
 <title>UzPost E-Commerce · Прогноз 2025–2027</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
+/* === UzPost Brand Colors ===
+   Primary Orange: #FF6B00 / #F7931E
+   Primary Blue:   #003087 / #0050B3
+   Background:     #F5F7FA (light grey-white)
+   Surface:        #FFFFFF
+   Text:           #1A1A2E
+   Muted:          #6B7280
+*/
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:linear-gradient(150deg,#020c1b,#040e1a,#020c1b);color:#e2e8f0;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;padding:18px 12px}
+body{background:linear-gradient(160deg,#EEF2FF,#F5F7FA,#FFF4ED);color:#1A1A2E;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;padding:18px 12px}
 .wrap{max-width:1200px;margin:0 auto}
-h1{font-size:20px;font-weight:900;letter-spacing:-.5px}
-.accent{color:#0ea5e9}
-.sub{font-size:11px;color:#334155;margin-top:2px}
+h1{font-size:20px;font-weight:900;letter-spacing:-.5px;color:#003087}
+.accent{color:#FF6B00}
+.sub{font-size:11px;color:#6B7280;margin-top:2px}
 .header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px}
 .tabs{display:flex;gap:6px}
 .tab{padding:7px 16px;border-radius:8px;border:none;cursor:pointer;font-size:13px;font-weight:700;transition:all .2s}
-.tab.on{background:#0ea5e9;color:#fff}
-.tab.off{background:rgba(10,20,40,.6);color:#475569;border:1px solid #152035}
+.tab.on{background:#003087;color:#fff;box-shadow:0 2px 8px rgba(0,48,135,.3)}
+.tab.off{background:#fff;color:#6B7280;border:1px solid #D1D5DB}
+.tab.off:hover{background:#F0F4FF;color:#003087;border-color:#003087}
 .years{display:flex;gap:4px;margin-top:6px}
-.yr{padding:4px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;border:1px solid #152035;background:rgba(10,20,40,.6);color:#475569}
-.yr.on{background:#f59e0b;color:#000;border-color:#f59e0b}
+.yr{padding:4px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;border:1px solid #D1D5DB;background:#fff;color:#6B7280}
+.yr.on{background:#FF6B00;color:#fff;border-color:#FF6B00;box-shadow:0 2px 6px rgba(255,107,0,.35)}
+.yr:hover:not(.on){background:#FFF4ED;border-color:#FF6B00;color:#FF6B00}
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-.kpi{border-radius:12px;padding:11px 14px}
-.kpi-label{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.kpi{border-radius:12px;padding:11px 14px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.kpi-label{font-size:9px;color:#9CA3AF;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
 .kpi-val{font-size:16px;font-weight:900;line-height:1.2}
-.kpi-sub{font-size:10px;color:#475569;margin-top:2px}
+.kpi-sub{font-size:10px;color:#9CA3AF;margin-top:2px}
 .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.card{background:rgba(10,20,40,.75);border:1px solid #152035;border-radius:14px;padding:16px}
-.card-title{font-size:11px;color:#475569;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:10px}
+.card{background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.card-title{font-size:11px;color:#6B7280;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:10px}
 .proj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
-.proj-item{border-radius:10px;padding:10px 12px}
+.proj-item{border-radius:10px;padding:10px 12px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .proj-name{font-size:13px;font-weight:800;margin-bottom:3px}
 .proj-rev{font-size:13px;font-weight:900}
-.proj-vol{font-size:10px;color:#334155;margin-top:2px}
+.proj-vol{font-size:10px;color:#9CA3AF;margin-top:2px}
 .all-proj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.all-proj-item{border-radius:10px;padding:10px 12px}
+.all-proj-item{border-radius:10px;padding:10px 12px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .all-proj-name{font-size:13px;font-weight:800;margin-bottom:3px}
-.all-proj-desc{font-size:10px;color:#475569;line-height:1.4}
+.all-proj-desc{font-size:10px;color:#6B7280;line-height:1.4}
 .partner-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.partner-item{border-radius:10px;padding:10px 12px}
+.partner-item{border-radius:10px;padding:10px 12px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .partner-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
-.partner-name{font-size:13px;font-weight:800;color:#f1f5f9}
+.partner-name{font-size:13px;font-weight:800;color:#1A1A2E}
 .partner-badge{border-radius:5px;padding:1px 6px;font-size:8px;font-weight:700;white-space:nowrap;margin-left:4px}
-.partner-svc{font-size:10px;color:#64748b}
+.partner-svc{font-size:10px;color:#9CA3AF}
 .tariff-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.tariff-group{border-radius:14px;padding:14px;border:1px solid #152035;margin-bottom:10px}
+.tariff-group{border-radius:14px;padding:14px;border:1px solid #E5E7EB;margin-bottom:10px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.05)}
 .tariff-group-title{font-size:11px;font-weight:800;margin-bottom:8px}
-.tariff-input-wrap{background:rgba(10,20,40,.6);border:1px solid #152035;border-radius:10px;padding:9px 12px;margin-bottom:6px;transition:all .15s}
-.tariff-input-wrap:focus-within{background:rgba(14,165,233,.1);border-color:#0ea5e9}
+.tariff-input-wrap{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:10px;padding:9px 12px;margin-bottom:6px;transition:all .15s}
+.tariff-input-wrap:focus-within{background:#FFF4ED;border-color:#FF6B00}
 .tariff-row{display:flex;justify-content:space-between;margin-bottom:3px}
-.tariff-label{font-size:11px;color:#94a3b8;font-weight:600}
-.tariff-note{font-size:9px;color:#334155;font-style:italic;margin-bottom:3px}
+.tariff-label{font-size:11px;color:#6B7280;font-weight:600}
+.tariff-note{font-size:9px;color:#9CA3AF;font-style:italic;margin-bottom:3px}
 .tariff-input-row{display:flex;align-items:center;gap:6px}
-.tariff-input{flex:1;background:transparent;border:none;outline:none;color:#f1f5f9;font-size:17px;font-weight:900;font-family:inherit;width:100%}
-.tariff-cur{font-size:11px;color:#475569;font-weight:600;white-space:nowrap}
-.footer{margin-top:12px;padding:8px 14px;background:rgba(14,165,233,.04);border:1px solid #152035;border-radius:10px;font-size:10px;color:#334155}
+.tariff-input{flex:1;background:transparent;border:none;outline:none;color:#1A1A2E;font-size:17px;font-weight:900;font-family:inherit;width:100%}
+.tariff-cur{font-size:11px;color:#9CA3AF;font-weight:600;white-space:nowrap}
+.footer{margin-top:12px;padding:8px 14px;background:#EEF2FF;border:1px solid #C7D2FE;border-radius:10px;font-size:10px;color:#6B7280}
 canvas{max-height:220px}
 section{display:none}
 section.active{display:block}
@@ -62,12 +72,12 @@ section.active{display:block}
 </head>
 <body>
 <div class="wrap">
-  <div class="header">
+  <div class="header" style="background:linear-gradient(135deg,#003087,#0050B3);padding:14px 18px;border-radius:14px;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,48,135,.25)">
     <div style="display:flex;align-items:center;gap:10px">
       <span style="font-size:24px">📦</span>
       <div>
-        <h1>UzPost <span class="accent">E-Commerce</span> · Прогноз 2025–2027</h1>
-        <p class="sub">1 USD = 12 250 сум · рост от месяца к месяцу</p>
+        <h1 style="color:#fff">UzPost <span style="color:#FF6B00">E-Commerce</span> · Прогноз 2025–2027</h1>
+        <p class="sub" style="color:rgba(255,255,255,.6)">1 USD = 12 250 сум · рост от месяца к месяцу</p>
       </div>
     </div>
     <div>
@@ -90,8 +100,8 @@ section.active{display:block}
   <section id="sec-tariffs"></section>
 
   <div class="footer">
-    💡 <b style="color:#0ea5e9">Проекты</b> — доход/объём по внутренним инициативам &nbsp;·&nbsp;
-    <b style="color:#4ade80">Партнёры</b> — доход/объём по внешним клиентам &nbsp;·&nbsp;
+    💡 <b style="color:#FF6B00">Проекты</b> — доход/объём по внутренним инициативам &nbsp;·&nbsp;
+    <b style="color:#10B981">Партнёры</b> — доход/объём по внешним клиентам &nbsp;·&nbsp;
     <b style="color:#f59e0b">Тарифы</b> — задайте свои цифры, всё пересчитается
   </div>
 </div>
@@ -113,18 +123,18 @@ const fmtUSD = n => {
 };
 
 const PROJECTS = [
-  {key:"pvz",icon:"🏪",label:"Рыночный десант",desc:"Мобильные команды на рынках, B2C отправления",color:"#0ea5e9"},
-  {key:"pvznet",icon:"🔗",label:"Партнёрская программа ПВЗ",desc:"1600 ПВЗ как канал продаж",color:"#38bdf8"},
+  {key:"pvz",icon:"🏪",label:"Рыночный десант",desc:"Мобильные команды на рынках, B2C отправления",color:"#0050B3"},
+  {key:"pvznet",icon:"🔗",label:"Партнёрская программа ПВЗ",desc:"1600 ПВЗ как канал продаж",color:"#3B82F6"},
   {key:"operators",icon:"👥",label:"Операторы = менеджеры",desc:"МЛМ-мотивация сотрудников отделений",color:"#7dd3fc"},
   {key:"b2bfull",icon:"📦",label:"Доставка до маркетплейса",desc:"B2B фулфилмент FBO/FBS",color:"#22c55e"},
   {key:"multipvz",icon:"🏬",label:"Мультибрендовые ПВЗ",desc:"Одно окно для всего e-commerce",color:"#4ade80"},
   {key:"courier",icon:"🛵",label:"Курьерская служба",desc:"Коммерческая курьерка +20–40% оборот",color:"#86efac"},
-  {key:"postamat",icon:"🤖",label:"Почтомат",desc:"Автоматизированные терминалы 24/7",color:"#f59e0b"},
+  {key:"postamat",icon:"🤖",label:"Почтомат",desc:"Автоматизированные терминалы 24/7",color:"#FF6B00"},
   {key:"franchise",icon:"🏢",label:"Франшиза UzPost",desc:"Расширение сети за счёт частных инвестиций",color:"#fbbf24"},
   {key:"dropship",icon:"🌐",label:"Дропшип",desc:"Международные объёмы через виртуальные хабы",color:"#c084fc"},
   {key:"remail",icon:"📬",label:"Ремейлинг",desc:"Транзит, открытие МОЗГР за рубежом",color:"#a78bfa"},
   {key:"transit",icon:"🚛",label:"Транзит",desc:"Физический транзит грузов",color:"#f43f5e"},
-  {key:"rent",icon:"🏗",label:"Аренда помещений",desc:"Монетизация незадействованных площадей",color:"#94a3b8"},
+  {key:"rent",icon:"🏗",label:"Аренда помещений",desc:"Монетизация незадействованных площадей",color:"#9CA3AF"},
 ];
 
 const PARTNERS = [
@@ -198,9 +208,9 @@ function calcPart(m) {
 const projRows = MONTHS36.map(m=>calcProj(m));
 const partRows = MONTHS36.map(m=>calcPart(m));
 
-const PROJ_COLORS={pvz:"#0ea5e9",b2bfull:"#22c55e",courier:"#86efac",dropship:"#c084fc",remail:"#a78bfa",transit:"#f43f5e",rent:"#94a3b8"};
+const PROJ_COLORS={pvz:"#0050B3",b2bfull:"#22c55e",courier:"#86efac",dropship:"#c084fc",remail:"#a78bfa",transit:"#f43f5e",rent:"#94a3b8"};
 const PROJ_RU={pvz:"Рыночный десант",b2bfull:"Доставка до МП",courier:"Курьерская",dropship:"Дропшип",remail:"Ремейлинг",transit:"Транзит",rent:"Аренда"};
-const PART_COLORS={uzum:"#0ea5e9",ozon:"#38bdf8",birqadam:"#4ade80",makeup:"#86efac",yandex:"#f59e0b",avito:"#fb923c",letters:"#64748b",hybrid:"#475569"};
+const PART_COLORS={uzum:"#0050B3",ozon:"#3B82F6",birqadam:"#4ade80",makeup:"#86efac",yandex:"#FF6B00",avito:"#fb923c",letters:"#64748b",hybrid:"#475569"};
 const PART_RU={uzum:"Uzum",ozon:"Ozon",birqadam:"BirQadam",makeup:"MakeUp",yandex:"Yandex",avito:"Avito",letters:"Письма",hybrid:"Гибридка"};
 
 let activeTab="projects", activeYr="all";
@@ -236,10 +246,10 @@ function makeLineChart(canvasId, labels, datasets) {
     data:{labels, datasets: datasets.map(d=>({...d,fill:true,tension:.4,borderWidth:2,pointRadius:0}))},
     options:{
       responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:"#64748b",font:{size:10},boxWidth:12}}},
+      plugins:{legend:{labels:{color:"#6B7280",font:{size:10},boxWidth:12}}},
       scales:{
-        x:{ticks:{color:"#334155",font:{size:9},maxTicksLimit:activeYr==="all"?9:6},grid:{color:"#0d1f35"}},
-        y:{ticks:{color:"#334155",font:{size:9},callback:v=>v>=1e9?(v/1e9).toFixed(1)+"млрд":v>=1e6?(v/1e6).toFixed(0)+"млн":""},grid:{color:"#0d1f35"},stacked:true}
+        x:{ticks:{color:"#9CA3AF",font:{size:9},maxTicksLimit:activeYr==="all"?9:6},grid:{color:"#E5E7EB"}},
+        y:{ticks:{color:"#9CA3AF",font:{size:9},callback:v=>v>=1e9?(v/1e9).toFixed(1)+"млрд":v>=1e6?(v/1e6).toFixed(0)+"млн":""},grid:{color:"#E5E7EB"},stacked:true}
       }
     }
   });
@@ -254,10 +264,10 @@ function makeBarChart(canvasId, labels, datasets) {
     data:{labels, datasets: datasets.map(d=>({...d,borderWidth:0}))},
     options:{
       responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:"#64748b",font:{size:10},boxWidth:12}}},
+      plugins:{legend:{labels:{color:"#6B7280",font:{size:10},boxWidth:12}}},
       scales:{
-        x:{ticks:{color:"#94a3b8",font:{size:activeYr==="all"?12:9,weight:"bold"}},grid:{display:false}},
-        y:{ticks:{color:"#334155",font:{size:9},callback:v=>v>=1e9?(v/1e9).toFixed(1)+"млрд":v>=1e6?(v/1e6).toFixed(0)+"млн":""},grid:{color:"#0d1f35"},stacked:true}
+        x:{ticks:{color:"#9CA3AF",font:{size:activeYr==="all"?12:9,weight:"bold"}},grid:{display:false}},
+        y:{ticks:{color:"#9CA3AF",font:{size:9},callback:v=>v>=1e9?(v/1e9).toFixed(1)+"млрд":v>=1e6?(v/1e6).toFixed(0)+"млн":""},grid:{color:"#E5E7EB"},stacked:true}
       }
     }
   });
@@ -265,7 +275,7 @@ function makeBarChart(canvasId, labels, datasets) {
 
 function statusColor(s) {
   if(s==="Запущен") return "#22c55e";
-  if(s==="Интеграция") return "#f59e0b";
+  if(s==="Интеграция") return "#FF6B00";
   if(s.includes("без интеграции")) return "#fb923c";
   return "#475569";
 }
@@ -277,21 +287,21 @@ function renderProjects() {
   const yrLabel = activeYr==="all"?"3 года":String(2025+parseInt(activeYr));
 
   const kpiData = [
-    {label:`Выручка проекты · ${yrLabel}`,val:fmtB(total)+" сум",sub:fmtUSD(total/UZS),color:"#0ea5e9"},
+    {label:`Выручка проекты · ${yrLabel}`,val:fmtB(total)+" сум",sub:fmtUSD(total/UZS),color:"#0050B3"},
     {label:"Последний месяц периода",val:fmtB(last.total)+" сум",sub:fmtUSD(last.total/UZS),color:"#22c55e"},
     {label:"Дропшип",val:fmtB(rows.reduce((a,r)=>a+r.dropship,0))+" сум",sub:`${fmtN(last.dropshipVol)} заказов/мес`,color:"#c084fc"},
     {label:"Ремейлинг",val:fmtB(rows.reduce((a,r)=>a+r.remail,0))+" сум",sub:`${fmtN(last.remailVol)} посылок/мес`,color:"#a78bfa"},
   ];
 
   const projItems = [
-    {icon:"🏪",label:"Рыночный десант",rev:rows.reduce((a,r)=>a+r.pvz,0),vol:`${fmtN(last.pvzVol)} отпр./мес`,color:"#0ea5e9"},
+    {icon:"🏪",label:"Рыночный десант",rev:rows.reduce((a,r)=>a+r.pvz,0),vol:`${fmtN(last.pvzVol)} отпр./мес`,color:"#0050B3"},
     {icon:"📦",label:"Доставка до МП",rev:rows.reduce((a,r)=>a+r.b2bfull,0),vol:`${fmtN(last.pvzVol)} отпр./мес`,color:"#22c55e"},
     {icon:"🛵",label:"Курьерская служба",rev:rows.reduce((a,r)=>a+r.courier,0),vol:`${fmtN(last.courierVol)} отпр./мес`,color:"#86efac"},
     {icon:"🌐",label:"Дропшип",rev:rows.reduce((a,r)=>a+r.dropship,0),vol:`${fmtN(last.dropshipVol)} заказов/мес`,color:"#c084fc"},
     {icon:"📬",label:"Ремейлинг",rev:rows.reduce((a,r)=>a+r.remail,0),vol:`${fmtN(last.remailVol)} посылок/мес`,color:"#a78bfa"},
     {icon:"🚛",label:"Транзит",rev:rows.reduce((a,r)=>a+r.transit,0),vol:`${fmtN(last.transitVol)} тонн/мес`,color:"#f43f5e"},
-    {icon:"🏗",label:"Аренда",rev:rows.reduce((a,r)=>a+r.rent,0),vol:`${fmtN(last.rentVol)} кв.м`,color:"#94a3b8"},
-    {icon:"💰",label:"ИТОГО",rev:total,vol:"все проекты",color:"#0ea5e9",total:true},
+    {icon:"🏗",label:"Аренда",rev:rows.reduce((a,r)=>a+r.rent,0),vol:`${fmtN(last.rentVol)} кв.м`,color:"#9CA3AF"},
+    {icon:"💰",label:"ИТОГО",rev:total,vol:"все проекты",color:"#0050B3",total:true},
   ];
 
   document.getElementById("sec-projects").innerHTML = `
@@ -310,8 +320,8 @@ function renderProjects() {
       <div class="card-title">📋 Все проекты — объём и доход · ${yrLabel}</div>
       <div class="proj-grid">${projItems.map(p=>`
         <div class="proj-item" style="background:${p.total?"rgba(14,165,233,0.1)":p.color+"08"};border:1px solid ${p.total?"rgba(14,165,233,0.3)":p.color+"25"}">
-          <div class="proj-name" style="color:${p.total?"#0ea5e9":p.color}">${p.icon} ${p.label}</div>
-          <div class="proj-rev" style="color:${p.total?"#0ea5e9":p.color}">${fmtB(p.rev)} сум</div>
+          <div class="proj-name" style="color:${p.total?"#0050B3":p.color}">${p.icon} ${p.label}</div>
+          <div class="proj-rev" style="color:${p.total?"#0050B3":p.color}">${fmtB(p.rev)} сум</div>
           <div class="proj-vol">${p.vol}</div>
         </div>`).join("")}
       </div>
@@ -350,9 +360,9 @@ function renderPartners() {
   const yrLabel = activeYr==="all"?"3 года":String(2025+parseInt(activeYr));
 
   const kpiData = [
-    {label:`Выручка партнёры · ${yrLabel}`,val:fmtB(total)+" сум",sub:fmtUSD(total/UZS),color:"#0ea5e9"},
+    {label:`Выручка партнёры · ${yrLabel}`,val:fmtB(total)+" сум",sub:fmtUSD(total/UZS),color:"#0050B3"},
     {label:"Последний месяц периода",val:fmtB(last.total)+" сум",sub:fmtUSD(last.total/UZS),color:"#22c55e"},
-    {label:"Uzum отправлений/мес",val:fmtN(last.uzumVol)+" шт",sub:fmtB(last.uzum)+" сум",color:"#38bdf8"},
+    {label:"Uzum отправлений/мес",val:fmtN(last.uzumVol)+" шт",sub:fmtB(last.uzum)+" сум",color:"#3B82F6"},
     {label:"BirQadam отправлений/мес",val:fmtN(last.birqadamVol)+" шт",sub:fmtB(last.birqadam)+" сум",color:"#4ade80"},
   ];
 
@@ -411,13 +421,13 @@ function tariffField(k, label, currency, note="") {
 
 function renderTariffs() {
   const groups = [
-    {label:"🏪 Рыночный десант",color:"#0ea5e9",fields:[{k:"pvzTariff",l:"Тариф",c:"сум"},{k:"pvzStart",l:"Отправлений/мес",c:"шт"},{k:"pvzGrowth",l:"Рост м/м",c:"%"}]},
+    {label:"🏪 Рыночный десант",color:"#0050B3",fields:[{k:"pvzTariff",l:"Тариф",c:"сум"},{k:"pvzStart",l:"Отправлений/мес",c:"шт"},{k:"pvzGrowth",l:"Рост м/м",c:"%"}]},
     {label:"📦 Доставка до маркетплейса",color:"#22c55e",fields:[{k:"b2bfullTariff",l:"Тариф",c:"сум"},{k:"b2bfullStart",l:"Отправлений/мес",c:"шт"},{k:"b2bfullGrowth",l:"Рост м/м",c:"%"}]},
     {label:"🛵 Курьерская служба",color:"#86efac",fields:[{k:"courierTariff",l:"Тариф",c:"сум"},{k:"courierStart",l:"Отправлений/мес",c:"шт"},{k:"courierGrowth",l:"Рост м/м",c:"%"}]},
     {label:"🌐 Дропшип",color:"#c084fc",fields:[{k:"dropshipKg",l:"Тариф за 1 кг",c:"сум"},{k:"dropshipAvgKg",l:"Средний вес",c:"кг"},{k:"dropshipStart",l:"Заказов/мес",c:"шт"},{k:"dropshipGrowth",l:"Рост м/м",c:"%"}]},
     {label:"📬 Ремейлинг",color:"#a78bfa",fields:[{k:"remailUSD",l:"Тариф за лейбл",c:"USD"},{k:"remailStart",l:"Посылок/мес",c:"шт"},{k:"remailGrowth",l:"Рост м/м",c:"%"}]},
     {label:"🚛 Транзит",color:"#f43f5e",fields:[{k:"transitUSD",l:"Тариф за тонну",c:"USD"},{k:"transitStart",l:"Тонн/мес",c:"т"},{k:"transitGrowth",l:"Рост м/м",c:"%"}]},
-    {label:"🏗 Аренда",color:"#94a3b8",fields:[{k:"rentMonthly",l:"Ставка аренды",c:"сум/кв.м"},{k:"rentStart",l:"Кв.м",c:"кв.м"},{k:"rentGrowth",l:"Рост м/м",c:"%"}]},
+    {label:"🏗 Аренда",color:"#9CA3AF",fields:[{k:"rentMonthly",l:"Ставка аренды",c:"сум/кв.м"},{k:"rentStart",l:"Кв.м",c:"кв.м"},{k:"rentGrowth",l:"Рост м/м",c:"%"}]},
   ];
 
   const partners = [
