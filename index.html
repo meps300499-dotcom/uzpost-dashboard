@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>UzPost E-Commerce · Прогноз 2025–2027</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:linear-gradient(150deg,#020c1b,#040e1a,#020c1b);color:#e2e8f0;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;padding:18px 12px}
+.wrap{max-width:1200px;margin:0 auto}
+h1{font-size:20px;font-weight:900;letter-spacing:-.5px}
+.accent{color:#0ea5e9}
+.sub{font-size:11px;color:#334155;margin-top:2px}
+.header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.tabs{display:flex;gap:6px}
+.tab{padding:7px 16px;border-radius:8px;border:none;cursor:pointer;font-size:13px;font-weight:700;transition:all .2s}
+.tab.on{background:#0ea5e9;color:#fff}
+.tab.off{background:rgba(10,20,40,.6);color:#475569;border:1px solid #152035}
+.years{display:flex;gap:4px;margin-top:6px}
+.yr{padding:4px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;border:1px solid #152035;background:rgba(10,20,40,.6);color:#475569}
+.yr.on{background:#f59e0b;color:#000;border-color:#f59e0b}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.kpi{border-radius:12px;padding:11px 14px}
+.kpi-label{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.kpi-val{font-size:16px;font-weight:900;line-height:1.2}
+.kpi-sub{font-size:10px;color:#475569;margin-top:2px}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.card{background:rgba(10,20,40,.75);border:1px solid #152035;border-radius:14px;padding:16px}
+.card-title{font-size:11px;color:#475569;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:10px}
+.proj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.proj-item{border-radius:10px;padding:10px 12px}
+.proj-name{font-size:13px;font-weight:800;margin-bottom:3px}
+.proj-rev{font-size:13px;font-weight:900}
+.proj-vol{font-size:10px;color:#334155;margin-top:2px}
+.all-proj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.all-proj-item{border-radius:10px;padding:10px 12px}
+.all-proj-name{font-size:13px;font-weight:800;margin-bottom:3px}
+.all-proj-desc{font-size:10px;color:#475569;line-height:1.4}
+.partner-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.partner-item{border-radius:10px;padding:10px 12px}
+.partner-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
+.partner-name{font-size:13px;font-weight:800;color:#f1f5f9}
+.partner-badge{border-radius:5px;padding:1px 6px;font-size:8px;font-weight:700;white-space:nowrap;margin-left:4px}
+.partner-svc{font-size:10px;color:#64748b}
+.tariff-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tariff-group{border-radius:14px;padding:14px;border:1px solid #152035;margin-bottom:10px}
+.tariff-group-title{font-size:11px;font-weight:800;margin-bottom:8px}
+.tariff-input-wrap{background:rgba(10,20,40,.6);border:1px solid #152035;border-radius:10px;padding:9px 12px;margin-bottom:6px;transition:all .15s}
+.tariff-input-wrap:focus-within{background:rgba(14,165,233,.1);border-color:#0ea5e9}
+.tariff-row{display:flex;justify-content:space-between;margin-bottom:3px}
+.tariff-label{font-size:11px;color:#94a3b8;font-weight:600}
+.tariff-note{font-size:9px;color:#334155;font-style:italic;margin-bottom:3px}
+.tariff-input-row{display:flex;align-items:center;gap:6px}
+.tariff-input{flex:1;background:transparent;border:none;outline:none;color:#f1f5f9;font-size:17px;font-weight:900;font-family:inherit;width:100%}
+.tariff-cur{font-size:11px;color:#475569;font-weight:600;white-space:nowrap}
+.footer{margin-top:12px;padding:8px 14px;background:rgba(14,165,233,.04);border:1px solid #152035;border-radius:10px;font-size:10px;color:#334155}
+canvas{max-height:220px}
+section{display:none}
+section.active{display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:24px">📦</span>
+      <div>
+        <h1>UzPost <span class="accent">E-Commerce</span> · Прогноз 2025–2027</h1>
+        <p class="sub">1 USD = 12 250 сум · рост от месяца к месяцу</p>
+      </div>
+    </div>
+    <div>
+      <div class="tabs" id="tabs">
+        <button class="tab on" data-tab="projects">📁 Проекты</button>
+        <button class="tab off" data-tab="partners">🤝 Партнёры</button>
+        <button class="tab off" data-tab="tariffs">💰 Тарифы</button>
+      </div>
+      <div class="years" id="years">
+        <button class="yr on" data-yr="all">Все 3 года</button>
+        <button class="yr off" data-yr="0">2025</button>
+        <button class="yr off" data-yr="1">2026</button>
+        <button class="yr off" data-yr="2">2027</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="sec-projects" class="active"></section>
+  <section id="sec-partners"></section>
+  <section id="sec-tariffs"></section>
+
+  <div class="footer">
+    💡 <b style="color:#0ea5e9">Проекты</b> — доход/объём по внутренним инициативам &nbsp;·&nbsp;
+    <b style="color:#4ade80">Партнёры</b> — доход/объём по внешним клиентам &nbsp;·&nbsp;
+    <b style="color:#f59e0b">Тарифы</b> — задайте свои цифры, всё пересчитается
+  </div>
+</div>
+
+<script>
+const UZS = 12250;
+const fmtN = n => new Intl.NumberFormat("ru-RU",{maximumFractionDigits:0}).format(n);
+const fmtB = n => {
+  if(!n||isNaN(n)) return "0";
+  if(Math.abs(n)>=1e12) return (n/1e12).toFixed(2)+" трлн";
+  if(Math.abs(n)>=1e9)  return (n/1e9).toFixed(2)+" млрд";
+  if(Math.abs(n)>=1e6)  return (n/1e6).toFixed(1)+" млн";
+  return fmtN(n);
+};
+const fmtUSD = n => {
+  if(Math.abs(n)>=1e6) return "$"+(n/1e6).toFixed(2)+"M";
+  if(Math.abs(n)>=1e3) return "$"+(n/1e3).toFixed(1)+"K";
+  return "$"+fmtN(Math.round(n));
+};
+
+const PROJECTS = [
+  {key:"pvz",icon:"🏪",label:"Рыночный десант",desc:"Мобильные команды на рынках, B2C отправления",color:"#0ea5e9"},
+  {key:"pvznet",icon:"🔗",label:"Партнёрская программа ПВЗ",desc:"1600 ПВЗ как канал продаж",color:"#38bdf8"},
+  {key:"operators",icon:"👥",label:"Операторы = менеджеры",desc:"МЛМ-мотивация сотрудников отделений",color:"#7dd3fc"},
+  {key:"b2bfull",icon:"📦",label:"Доставка до маркетплейса",desc:"B2B фулфилмент FBO/FBS",color:"#22c55e"},
+  {key:"multipvz",icon:"🏬",label:"Мультибрендовые ПВЗ",desc:"Одно окно для всего e-commerce",color:"#4ade80"},
+  {key:"courier",icon:"🛵",label:"Курьерская служба",desc:"Коммерческая курьерка +20–40% оборот",color:"#86efac"},
+  {key:"postamat",icon:"🤖",label:"Почтомат",desc:"Автоматизированные терминалы 24/7",color:"#f59e0b"},
+  {key:"franchise",icon:"🏢",label:"Франшиза UzPost",desc:"Расширение сети за счёт частных инвестиций",color:"#fbbf24"},
+  {key:"dropship",icon:"🌐",label:"Дропшип",desc:"Международные объёмы через виртуальные хабы",color:"#c084fc"},
+  {key:"remail",icon:"📬",label:"Ремейлинг",desc:"Транзит, открытие МОЗГР за рубежом",color:"#a78bfa"},
+  {key:"transit",icon:"🚛",label:"Транзит",desc:"Физический транзит грузов",color:"#f43f5e"},
+  {key:"rent",icon:"🏗",label:"Аренда помещений",desc:"Монетизация незадействованных площадей",color:"#94a3b8"},
+];
+
+const PARTNERS = [
+  {name:"Uzum",service:"Доставка + выдача ПВЗ",status:"Запущен"},
+  {name:"Ozon",service:"Доставка + выдача ПВЗ",status:"Запущен"},
+  {name:"BirQadam",service:"Доставка до ПВЗ",status:"Запущен"},
+  {name:"MakeUp",service:"Курьерская доставка",status:"Запущен"},
+  {name:"Yandex Market",service:"Доставка + выдача ПВЗ",status:"Запущен"},
+  {name:"Avito",service:"Доставка + выдача ПВЗ",status:"Интеграция"},
+  {name:"iHERB",service:"Растаможка + доставка до ПВЗ",status:"Обсуждение"},
+  {name:"Германия",service:"Ремейлинг",status:"Обсуждение"},
+  {name:"Молдова",service:"Ремейлинг",status:"Обсуждение"},
+  {name:"Беларусь",service:"Ремейлинг",status:"Обсуждение"},
+  {name:"UzumGlobal",service:"Растаможка + доставка до ПВЗ",status:"Обсуждение"},
+  {name:"Yandex Доставка",service:"Доставка",status:"Обсуждение"},
+  {name:"С2С РФ – Узб",service:"Растаможка + доставка до ПВЗ",status:"Обсуждение"},
+  {name:"Exzap",service:"BirQadam",status:"Запущен"},
+  {name:"Amway",service:"Доставка + выдача ПВЗ",status:"Обсуждение"},
+  {name:"WB",service:"Доставка + выдача ПВЗ",status:"Запущен (без интеграции)"},
+  {name:"Письма",service:"Почтальон",status:"Запущен"},
+  {name:"Гибридка",service:"Почтальон",status:"Запущен"},
+  {name:"Transasia Logistics",service:"BirQadam",status:"Обсуждение"},
+];
+
+let T = {
+  pvzTariff:15000,pvzGrowth:10,pvzStart:9000,
+  b2bfullTariff:22000,b2bfullGrowth:15,b2bfullStart:5000,
+  courierTariff:25000,courierGrowth:20,courierStart:3000,
+  dropshipKg:17000,dropshipGrowth:15,dropshipStart:2000,dropshipAvgKg:1.5,
+  remailUSD:0.35,remailGrowth:20,remailStart:500,
+  transitUSD:120,transitGrowth:8,transitStart:50,
+  rentMonthly:500000,rentGrowth:5,rentStart:10,
+  tUzum:9800,tOzon:10000,tBirQadam:15000,tMakeUp:20000,tYandex:17500,tAvito:17760,
+  tIherb:0,tGermany:0,tMoldova:0,tBelarus:0,tUzumGlobal:0,tYandexDel:0,
+  tC2CRF:0,tExzap:12000,tAmway:0,tWB:0,tLetters:9500,tHybrid:9850,tTransasia:0,
+};
+
+const MONTHS36 = Array.from({length:36},(_,i)=>i);
+const ML = MONTHS36.map(i=>new Date(2025,i,1).toLocaleString("ru-RU",{month:"short",year:"2-digit"}));
+
+function calcProj(m) {
+  const g=(b,r)=>b*Math.pow(1+r/100,m);
+  const pvz=g(T.pvzStart,T.pvzGrowth)*T.pvzTariff;
+  const b2bfull=g(T.b2bfullStart,T.b2bfullGrowth)*T.b2bfullTariff;
+  const courier=g(T.courierStart,T.courierGrowth)*T.courierTariff;
+  const dropship=g(T.dropshipStart,T.dropshipGrowth)*T.dropshipAvgKg*T.dropshipKg;
+  const remail=g(T.remailStart,T.remailGrowth)*T.remailUSD*UZS;
+  const transit=g(T.transitStart,T.transitGrowth)*T.transitUSD*UZS;
+  const rent=g(T.rentStart,T.rentGrowth)*T.rentMonthly;
+  return {pvz,b2bfull,courier,dropship,remail,transit,rent,
+    pvzVol:Math.round(g(T.pvzStart,T.pvzGrowth)),
+    courierVol:Math.round(g(T.courierStart,T.courierGrowth)),
+    dropshipVol:Math.round(g(T.dropshipStart,T.dropshipGrowth)),
+    remailVol:Math.round(g(T.remailStart,T.remailGrowth)),
+    transitVol:Math.round(g(T.transitStart,T.transitGrowth)),
+    rentVol:Math.round(g(T.rentStart,T.rentGrowth)),
+    total:pvz+b2bfull+courier+dropship+remail+transit+rent};
+}
+
+function calcPart(m) {
+  const base={uzum:129036,ozon:11353,birqadam:86983,makeup:3789,yandex:17500,avito:2000,letters:327070,hybrid:3524336,exzap:10};
+  const g=(b,r=10)=>b*Math.pow(1+r/100,m);
+  const uzum=g(base.uzum)*T.tUzum,ozon=g(base.ozon)*T.tOzon,birqadam=g(base.birqadam)*T.tBirQadam;
+  const makeup=g(base.makeup,3)*T.tMakeUp,yandex=g(base.yandex)*T.tYandex,avito=g(base.avito,15)*T.tAvito;
+  const letters=g(base.letters,3)*T.tLetters,hybrid=g(base.hybrid,5)*T.tHybrid,exzap=g(base.exzap,10)*T.tExzap;
+  return {uzum,ozon,birqadam,makeup,yandex,avito,letters,hybrid,exzap,
+    uzumVol:Math.round(g(base.uzum)),birqadamVol:Math.round(g(base.birqadam)),
+    total:uzum+ozon+birqadam+makeup+yandex+avito+letters+hybrid+exzap};
+}
+
+const projRows = MONTHS36.map(m=>calcProj(m));
+const partRows = MONTHS36.map(m=>calcPart(m));
+
+const PROJ_COLORS={pvz:"#0ea5e9",b2bfull:"#22c55e",courier:"#86efac",dropship:"#c084fc",remail:"#a78bfa",transit:"#f43f5e",rent:"#94a3b8"};
+const PROJ_RU={pvz:"Рыночный десант",b2bfull:"Доставка до МП",courier:"Курьерская",dropship:"Дропшип",remail:"Ремейлинг",transit:"Транзит",rent:"Аренда"};
+const PART_COLORS={uzum:"#0ea5e9",ozon:"#38bdf8",birqadam:"#4ade80",makeup:"#86efac",yandex:"#f59e0b",avito:"#fb923c",letters:"#64748b",hybrid:"#475569"};
+const PART_RU={uzum:"Uzum",ozon:"Ozon",birqadam:"BirQadam",makeup:"MakeUp",yandex:"Yandex",avito:"Avito",letters:"Письма",hybrid:"Гибридка"};
+
+let activeTab="projects", activeYr="all";
+const charts={};
+
+function getRows(rows) {
+  if(activeYr==="all") return rows;
+  const yr=parseInt(activeYr);
+  return rows.slice(yr*12,(yr+1)*12);
+}
+function getLabels() {
+  if(activeYr==="all") return ML;
+  const yr=parseInt(activeYr);
+  return ML.slice(yr*12,(yr+1)*12);
+}
+function getAnnual(rows, keys) {
+  return [0,1,2].map(yr=>({
+    label:String(2025+yr),
+    ...Object.fromEntries(keys.map(k=>[k,rows.slice(yr*12,(yr+1)*12).reduce((a,r)=>a+r[k],0)]))
+  }));
+}
+
+function destroyChart(id) {
+  if(charts[id]) { charts[id].destroy(); delete charts[id]; }
+}
+
+function makeLineChart(canvasId, labels, datasets) {
+  destroyChart(canvasId);
+  const ctx = document.getElementById(canvasId);
+  if(!ctx) return;
+  charts[canvasId] = new Chart(ctx, {
+    type:'line',
+    data:{labels, datasets: datasets.map(d=>({...d,fill:true,tension:.4,borderWidth:2,pointRadius:0}))},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:"#64748b",font:{size:10},boxWidth:12}}},
+      scales:{
+        x:{ticks:{color:"#334155",font:{size:9},maxTicksLimit:activeYr==="all"?9:6},grid:{color:"#0d1f35"}},
+        y:{ticks:{color:"#334155",font:{size:9},callback:v=>v>=1e9?(v/1e9).toFixed(1)+"млрд":v>=1e6?(v/1e6).toFixed(0)+"млн":""},grid:{color:"#0d1f35"},stacked:true}
+      }
+    }
+  });
+}
+
+function makeBarChart(canvasId, labels, datasets) {
+  destroyChart(canvasId);
+  const ctx = document.getElementById(canvasId);
+  if(!ctx) return;
+  charts[canvasId] = new Chart(ctx, {
+    type:'bar',
+    data:{labels, datasets: datasets.map(d=>({...d,borderWidth:0}))},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:"#64748b",font:{size:10},boxWidth:12}}},
+      scales:{
+        x:{ticks:{color:"#94a3b8",font:{size:activeYr==="all"?12:9,weight:"bold"}},grid:{display:false}},
+        y:{ticks:{color:"#334155",font:{size:9},callback:v=>v>=1e9?(v/1e9).toFixed(1)+"млрд":v>=1e6?(v/1e6).toFixed(0)+"млн":""},grid:{color:"#0d1f35"},stacked:true}
+      }
+    }
+  });
+}
+
+function statusColor(s) {
+  if(s==="Запущен") return "#22c55e";
+  if(s==="Интеграция") return "#f59e0b";
+  if(s.includes("без интеграции")) return "#fb923c";
+  return "#475569";
+}
+
+function renderProjects() {
+  const rows = getRows(projRows);
+  const last = rows[rows.length-1];
+  const total = rows.reduce((a,r)=>a+r.total,0);
+  const yrLabel = activeYr==="all"?"3 года":String(2025+parseInt(activeYr));
+
+  const kpiData = [
+    {label:`Выручка проекты · ${yrLabel}`,val:fmtB(total)+" сум",sub:fmtUSD(total/UZS),color:"#0ea5e9"},
+    {label:"Последний месяц периода",val:fmtB(last.total)+" сум",sub:fmtUSD(last.total/UZS),color:"#22c55e"},
+    {label:"Дропшип",val:fmtB(rows.reduce((a,r)=>a+r.dropship,0))+" сум",sub:`${fmtN(last.dropshipVol)} заказов/мес`,color:"#c084fc"},
+    {label:"Ремейлинг",val:fmtB(rows.reduce((a,r)=>a+r.remail,0))+" сум",sub:`${fmtN(last.remailVol)} посылок/мес`,color:"#a78bfa"},
+  ];
+
+  const projItems = [
+    {icon:"🏪",label:"Рыночный десант",rev:rows.reduce((a,r)=>a+r.pvz,0),vol:`${fmtN(last.pvzVol)} отпр./мес`,color:"#0ea5e9"},
+    {icon:"📦",label:"Доставка до МП",rev:rows.reduce((a,r)=>a+r.b2bfull,0),vol:`${fmtN(last.pvzVol)} отпр./мес`,color:"#22c55e"},
+    {icon:"🛵",label:"Курьерская служба",rev:rows.reduce((a,r)=>a+r.courier,0),vol:`${fmtN(last.courierVol)} отпр./мес`,color:"#86efac"},
+    {icon:"🌐",label:"Дропшип",rev:rows.reduce((a,r)=>a+r.dropship,0),vol:`${fmtN(last.dropshipVol)} заказов/мес`,color:"#c084fc"},
+    {icon:"📬",label:"Ремейлинг",rev:rows.reduce((a,r)=>a+r.remail,0),vol:`${fmtN(last.remailVol)} посылок/мес`,color:"#a78bfa"},
+    {icon:"🚛",label:"Транзит",rev:rows.reduce((a,r)=>a+r.transit,0),vol:`${fmtN(last.transitVol)} тонн/мес`,color:"#f43f5e"},
+    {icon:"🏗",label:"Аренда",rev:rows.reduce((a,r)=>a+r.rent,0),vol:`${fmtN(last.rentVol)} кв.м`,color:"#94a3b8"},
+    {icon:"💰",label:"ИТОГО",rev:total,vol:"все проекты",color:"#0ea5e9",total:true},
+  ];
+
+  document.getElementById("sec-projects").innerHTML = `
+    <div class="kpi-grid">${kpiData.map(k=>`
+      <div class="kpi" style="background:${k.color}0d;border:1px solid ${k.color}25">
+        <div class="kpi-label">${k.label}</div>
+        <div class="kpi-val" style="color:${k.color}">${k.val}</div>
+        <div class="kpi-sub">${k.sub}</div>
+      </div>`).join("")}
+    </div>
+    <div class="chart-grid">
+      <div class="card"><div class="card-title">📈 Ежемесячная выручка — проекты · ${yrLabel}</div><div style="height:220px"><canvas id="c-proj-line"></canvas></div></div>
+      <div class="card"><div class="card-title">📊 ${activeYr==="all"?"Годовая выручка — проекты":"Месяцы "+yrLabel+" — проекты"}</div><div style="height:220px"><canvas id="c-proj-bar"></canvas></div></div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-title">📋 Все проекты — объём и доход · ${yrLabel}</div>
+      <div class="proj-grid">${projItems.map(p=>`
+        <div class="proj-item" style="background:${p.total?"rgba(14,165,233,0.1)":p.color+"08"};border:1px solid ${p.total?"rgba(14,165,233,0.3)":p.color+"25"}">
+          <div class="proj-name" style="color:${p.total?"#0ea5e9":p.color}">${p.icon} ${p.label}</div>
+          <div class="proj-rev" style="color:${p.total?"#0ea5e9":p.color}">${fmtB(p.rev)} сум</div>
+          <div class="proj-vol">${p.vol}</div>
+        </div>`).join("")}
+      </div>
+    </div>
+    <div>
+      <div class="card-title" style="margin-bottom:10px">📁 Все проекты UzPost</div>
+      <div class="all-proj-grid">${PROJECTS.map(p=>`
+        <div class="all-proj-item" style="background:${p.color}08;border:1px solid ${p.color}25">
+          <div class="all-proj-name" style="color:${p.color}">${p.icon} ${p.label}</div>
+          <div class="all-proj-desc">${p.desc}</div>
+        </div>`).join("")}
+      </div>
+    </div>`;
+
+  // Line chart
+  const labels = getLabels();
+  const lineDs = Object.entries(PROJ_COLORS).map(([k,c])=>({
+    label:PROJ_RU[k], data:rows.map(r=>r[k]||0),
+    borderColor:c, backgroundColor:c+"33", stack:"a"
+  }));
+  makeLineChart("c-proj-line", labels, lineDs);
+
+  // Bar chart
+  const barSrc = activeYr==="all" ? getAnnual(projRows,Object.keys(PROJ_COLORS)) : rows.map((r,i)=>({label:labels[i],...r}));
+  const barDs = Object.entries(PROJ_COLORS).map(([k,c])=>({
+    label:PROJ_RU[k], data:barSrc.map(r=>r[k]||0),
+    backgroundColor:c+"cc", stack:"a"
+  }));
+  makeBarChart("c-proj-bar", barSrc.map(r=>r.label||r.year||""), barDs);
+}
+
+function renderPartners() {
+  const rows = getRows(partRows);
+  const last = rows[rows.length-1];
+  const total = rows.reduce((a,r)=>a+r.total,0);
+  const yrLabel = activeYr==="all"?"3 года":String(2025+parseInt(activeYr));
+
+  const kpiData = [
+    {label:`Выручка партнёры · ${yrLabel}`,val:fmtB(total)+" сум",sub:fmtUSD(total/UZS),color:"#0ea5e9"},
+    {label:"Последний месяц периода",val:fmtB(last.total)+" сум",sub:fmtUSD(last.total/UZS),color:"#22c55e"},
+    {label:"Uzum отправлений/мес",val:fmtN(last.uzumVol)+" шт",sub:fmtB(last.uzum)+" сум",color:"#38bdf8"},
+    {label:"BirQadam отправлений/мес",val:fmtN(last.birqadamVol)+" шт",sub:fmtB(last.birqadam)+" сум",color:"#4ade80"},
+  ];
+
+  document.getElementById("sec-partners").innerHTML = `
+    <div class="kpi-grid">${kpiData.map(k=>`
+      <div class="kpi" style="background:${k.color}0d;border:1px solid ${k.color}25">
+        <div class="kpi-label">${k.label}</div>
+        <div class="kpi-val" style="color:${k.color}">${k.val}</div>
+        <div class="kpi-sub">${k.sub}</div>
+      </div>`).join("")}
+    </div>
+    <div class="chart-grid">
+      <div class="card"><div class="card-title">📈 Ежемесячная выручка — партнёры · ${yrLabel}</div><div style="height:220px"><canvas id="c-part-line"></canvas></div></div>
+      <div class="card"><div class="card-title">📊 ${activeYr==="all"?"Годовая выручка — партнёры":"Месяцы "+yrLabel+" — партнёры"}</div><div style="height:220px"><canvas id="c-part-bar"></canvas></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="margin-bottom:12px">🤝 Все партнёры — статус</div>
+      <div class="partner-grid">${PARTNERS.map(p=>{const sc=statusColor(p.status);return`
+        <div class="partner-item" style="background:${sc}08;border:1px solid ${sc}25">
+          <div class="partner-top">
+            <span class="partner-name">${p.name}</span>
+            <span class="partner-badge" style="background:${sc}20;border:1px solid ${sc}40;color:${sc}">${p.status}</span>
+          </div>
+          <div class="partner-svc">${p.service}</div>
+        </div>`}).join("")}
+      </div>
+    </div>`;
+
+  const labels = getLabels();
+  const lineDs = Object.entries(PART_COLORS).map(([k,c])=>({
+    label:PART_RU[k], data:rows.map(r=>r[k]||0),
+    borderColor:c, backgroundColor:c+"33", stack:"a"
+  }));
+  makeLineChart("c-part-line", labels, lineDs);
+
+  const barSrc = activeYr==="all" ? getAnnual(partRows,Object.keys(PART_COLORS)) : rows.map((r,i)=>({label:labels[i],...r}));
+  const barDs = Object.entries(PART_COLORS).map(([k,c])=>({
+    label:PART_RU[k], data:barSrc.map(r=>r[k]||0),
+    backgroundColor:c+"cc", stack:"a"
+  }));
+  makeBarChart("c-part-bar", barSrc.map(r=>r.label||r.year||""), barDs);
+}
+
+function tariffField(k, label, currency, note="") {
+  return `<div class="tariff-input-wrap">
+    <div class="tariff-row">
+      <span class="tariff-label">${label}</span>
+    </div>
+    ${note?`<div class="tariff-note">${note}</div>`:""}
+    <div class="tariff-input-row">
+      <input class="tariff-input" type="number" value="${T[k]}" data-key="${k}" onchange="updateT(this)"/>
+      <span class="tariff-cur">${currency}</span>
+    </div>
+  </div>`;
+}
+
+function renderTariffs() {
+  const groups = [
+    {label:"🏪 Рыночный десант",color:"#0ea5e9",fields:[{k:"pvzTariff",l:"Тариф",c:"сум"},{k:"pvzStart",l:"Отправлений/мес",c:"шт"},{k:"pvzGrowth",l:"Рост м/м",c:"%"}]},
+    {label:"📦 Доставка до маркетплейса",color:"#22c55e",fields:[{k:"b2bfullTariff",l:"Тариф",c:"сум"},{k:"b2bfullStart",l:"Отправлений/мес",c:"шт"},{k:"b2bfullGrowth",l:"Рост м/м",c:"%"}]},
+    {label:"🛵 Курьерская служба",color:"#86efac",fields:[{k:"courierTariff",l:"Тариф",c:"сум"},{k:"courierStart",l:"Отправлений/мес",c:"шт"},{k:"courierGrowth",l:"Рост м/м",c:"%"}]},
+    {label:"🌐 Дропшип",color:"#c084fc",fields:[{k:"dropshipKg",l:"Тариф за 1 кг",c:"сум"},{k:"dropshipAvgKg",l:"Средний вес",c:"кг"},{k:"dropshipStart",l:"Заказов/мес",c:"шт"},{k:"dropshipGrowth",l:"Рост м/м",c:"%"}]},
+    {label:"📬 Ремейлинг",color:"#a78bfa",fields:[{k:"remailUSD",l:"Тариф за лейбл",c:"USD"},{k:"remailStart",l:"Посылок/мес",c:"шт"},{k:"remailGrowth",l:"Рост м/м",c:"%"}]},
+    {label:"🚛 Транзит",color:"#f43f5e",fields:[{k:"transitUSD",l:"Тариф за тонну",c:"USD"},{k:"transitStart",l:"Тонн/мес",c:"т"},{k:"transitGrowth",l:"Рост м/м",c:"%"}]},
+    {label:"🏗 Аренда",color:"#94a3b8",fields:[{k:"rentMonthly",l:"Ставка аренды",c:"сум/кв.м"},{k:"rentStart",l:"Кв.м",c:"кв.м"},{k:"rentGrowth",l:"Рост м/м",c:"%"}]},
+  ];
+
+  const partners = [
+    {k:"tUzum",l:"Uzum",n:"Запущен"},{k:"tOzon",l:"Ozon",n:"Запущен"},{k:"tBirQadam",l:"BirQadam",n:"Запущен"},
+    {k:"tMakeUp",l:"MakeUp",n:"Запущен"},{k:"tYandex",l:"Yandex Market",n:"Запущен"},{k:"tAvito",l:"Avito",n:"Интеграция"},
+    {k:"tIherb",l:"iHERB",n:"В обсуждении"},{k:"tGermany",l:"Германия",n:"В обсуждении"},{k:"tMoldova",l:"Молдова",n:"В обсуждении"},
+    {k:"tBelarus",l:"Беларусь",n:"В обсуждении"},{k:"tUzumGlobal",l:"UzumGlobal",n:"В обсуждении"},{k:"tYandexDel",l:"Yandex Доставка",n:"В обсуждении"},
+    {k:"tC2CRF",l:"С2С РФ – Узб",n:"В обсуждении"},{k:"tExzap",l:"Exzap",n:"Запущен"},{k:"tAmway",l:"Amway",n:"В обсуждении"},
+    {k:"tWB",l:"WB",n:"Запущен (без интеграции)"},{k:"tLetters",l:"Письма",n:"Запущен"},{k:"tHybrid",l:"Гибридка",n:"Запущен"},
+    {k:"tTransasia",l:"Transasia Logistics",n:"В обсуждении"},
+  ];
+
+  document.getElementById("sec-tariffs").innerHTML = `
+    <div class="tariff-grid">
+      <div>
+        <div class="card-title" style="margin-bottom:8px">📁 Тарифы проектов</div>
+        ${groups.map(g=>`
+          <div class="tariff-group" style="border-left:3px solid ${g.color}">
+            <div class="tariff-group-title" style="color:${g.color}">${g.label}</div>
+            ${g.fields.map(f=>tariffField(f.k,f.l,f.c)).join("")}
+          </div>`).join("")}
+      </div>
+      <div>
+        <div class="card-title" style="margin-bottom:8px">🤝 Тарифы партнёров (сум за отправление)</div>
+        <div class="card">
+          ${partners.map(p=>tariffField(p.k,p.l,"сум",p.n)).join("")}
+        </div>
+      </div>
+    </div>`;
+}
+
+function updateT(el) {
+  T[el.dataset.key] = parseFloat(el.value)||0;
+  // Recalculate
+  MONTHS36.forEach(m=>{ Object.assign(projRows[m],calcProj(m)); Object.assign(partRows[m],calcPart(m)); });
+  render();
+}
+
+function render() {
+  if(activeTab==="projects") renderProjects();
+  else if(activeTab==="partners") renderPartners();
+  else renderTariffs();
+}
+
+// Tab switching
+document.getElementById("tabs").addEventListener("click",e=>{
+  const btn=e.target.closest("[data-tab]");
+  if(!btn) return;
+  activeTab=btn.dataset.tab;
+  document.querySelectorAll(".tab").forEach(b=>b.className="tab off");
+  btn.className="tab on";
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.getElementById("sec-"+activeTab).classList.add("active");
+  render();
+});
+
+// Year switching
+document.getElementById("years").addEventListener("click",e=>{
+  const btn=e.target.closest("[data-yr]");
+  if(!btn) return;
+  activeYr=btn.dataset.yr;
+  document.querySelectorAll(".yr").forEach(b=>b.className="yr off");
+  btn.className="yr on";
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
