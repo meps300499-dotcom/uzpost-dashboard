@@ -1,0 +1,38 @@
+name: Deploy Dashboard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pending.json'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Apply pending update
+        run: |
+          python3 -c "
+          import json, base64
+          with open('pending.json') as f:
+              data = json.load(f)
+          if data.get('content'):
+              content = base64.b64decode(data['content']).decode('utf-8')
+              with open('index.html', 'w') as f:
+                  f.write(content)
+              print('index.html updated')
+          else:
+              print('No update pending')
+          "
+
+      - name: Commit
+        run: |
+          git config user.name "UzPost Bot"
+          git config user.email "bot@uzpost.uz"
+          git add index.html
+          git diff --staged --quiet || git commit -m "auto: update dashboard"
+          git push
