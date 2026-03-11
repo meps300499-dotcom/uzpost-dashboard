@@ -112,8 +112,7 @@ section.active{display:block}
 <div class="wrap">
   <div class="header">
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:24px">📦</span>
-      <div>
+    <div>
         <h1 style="color:#fff">UzPost <span style="color:#FF6B00">E-Commerce</span> · Прогноз 2025–2027</h1>
         <p class="sub" style="color:rgba(255,255,255,.6)">1 USD = 12 250 сум · рост от месяца к месяцу</p>
       </div>
@@ -483,14 +482,18 @@ function renderFact(){
         <div class="kpi-sub">${fmtUSD(factRev/UZS)}</div>
       </div>
       <div class="kpi" style="background:#FF6B0010;border:1px solid #FF6B0025">
-        <div class="kpi-label">Факт vs План янв+фев</div>
-        <div class="kpi-val" style="color:${factTotal2m>=planTotal2m?"#16a34a":"#FF6B00"}">${factTotal2m?Math.round(factTotal2m/Math.max(planTotal2m,1)*100):0}%</div>
-        <div class="kpi-sub">${fmtN(factTotal2m)} факт · ${fmtN(Math.round(planTotal2m))} план (шт)</div>
+        <div class="kpi-label">E-Commerce факт (без писем)</div>
+        <div class="kpi-val" style="color:#FF6B00">${fmtN(
+          (factData["Uzum"]?.total||0)+(factData["Ozon"]?.total||0)+
+          (factData["BirQadam"]?.total||0)+(factData["MakeUp"]?.total||0)+
+          (factData["Exzap"]?.total||0)+(factData["Avito"]?.total||0)
+        )} шт</div>
+        <div class="kpi-sub">маркетплейсы янв+фев</div>
       </div>
       <div class="kpi" style="background:#c084fc10;border:1px solid #c084fc25">
-        <div class="kpi-label">Uzum + BirQadam факт</div>
-        <div class="kpi-val" style="color:#c084fc">${fmtN((factData["Uzum"]?.total||0)+(factData["BirQadam"]?.total||0))} шт</div>
-        <div class="kpi-sub">${fmtB(((factData["Uzum"]?.total||0)*T.tUzum)+((factData["BirQadam"]?.total||0)*T.tBirQadam))} сум</div>
+        <div class="kpi-label">Письма + Гибридка факт</div>
+        <div class="kpi-val" style="color:#7c3aed">${fmtN((factData["Письма"]?.total||0)+(factData["Гибридка"]?.total||0))} шт</div>
+        <div class="kpi-sub">${fmtB(((factData["Письма"]?.total||0)*T.tLetters)+((factData["Гибридка"]?.total||0)*T.tHybrid))} сум</div>
       </div>
     </div>
 
