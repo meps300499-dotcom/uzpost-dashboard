@@ -191,26 +191,27 @@ const PROJECTS=[
 ];
 
 const PARTNERS=[
-  {name:"Uzum",service:"Доставка + выдача ПВЗ",status:"Запущен"},
-  {name:"Ozon",service:"Доставка + выдача ПВЗ",status:"Запущен"},
-  {name:"BirQadam",service:"Доставка до ПВЗ",status:"Запущен"},
-  {name:"MakeUp",service:"Курьерская доставка",status:"Запущен"},
-  {name:"Yandex Market",service:"Доставка + выдача ПВЗ",status:"Запущен"},
-  {name:"Avito",service:"Доставка + выдача ПВЗ",status:"Интеграция"},
-  {name:"iHERB",service:"Растаможка + доставка до ПВЗ",status:"Обсуждение"},
-  {name:"Германия",service:"Ремейлинг",status:"Обсуждение"},
-  {name:"Молдова",service:"Ремейлинг",status:"Обсуждение"},
-  {name:"Беларусь",service:"Ремейлинг",status:"Обсуждение"},
-  {name:"UzumGlobal",service:"Растаможка + доставка до ПВЗ",status:"Обсуждение"},
-  {name:"Yandex Доставка",service:"Доставка",status:"Обсуждение"},
-  {name:"С2С РФ – Узб",service:"Растаможка + доставка до ПВЗ",status:"Обсуждение"},
-  {name:"Exzap",service:"BirQadam",status:"Запущен"},
-  {name:"Amway",service:"Доставка + выдача ПВЗ",status:"Обсуждение"},
-  {name:"WB",service:"Доставка + выдача ПВЗ",status:"Запущен (без интеграции)"},
-  {name:"Письма",service:"Почтальон",status:"Запущен"},
-  {name:"Гибридка",service:"Почтальон",status:"Запущен"},
-  {name:"Transasia Logistics",service:"BirQadam",status:"Обсуждение"},
+  {name:"Uzum",         icon:"🛒",service:"Доставка + выдача ПВЗ",         status:"Запущен",                 segment:"local",tariffKey:"tUzum",     deadline:"",          contact:"",comment:"Основной партнёр"},
+  {name:"Ozon",         icon:"📦",service:"Доставка + выдача ПВЗ",         status:"Запущен",                 segment:"local",tariffKey:"tOzon",     deadline:"",          contact:"",comment:""},
+  {name:"BirQadam",     icon:"🏃",service:"Доставка до ПВЗ",               status:"Запущен",                 segment:"local",tariffKey:"tBirQadam", deadline:"",          contact:"",comment:""},
+  {name:"MakeUp",       icon:"💄",service:"Курьерская доставка",           status:"Запущен",                 segment:"local",tariffKey:"tMakeUp",   deadline:"",          contact:"",comment:""},
+  {name:"Yandex Market",icon:"🟡",service:"Доставка + выдача ПВЗ",         status:"Запущен",                 segment:"local",tariffKey:"tYandex",   deadline:"",          contact:"",comment:""},
+  {name:"WB",           icon:"🍓",service:"Доставка + выдача ПВЗ",         status:"Запущен (без интеграции)",segment:"local",tariffKey:"tWB",       deadline:"",          contact:"",comment:"Нет API интеграции"},
+  {name:"Exzap",        icon:"⚡",service:"Доставка",                      status:"Запущен",                 segment:"local",tariffKey:"tExzap",    deadline:"",          contact:"",comment:""},
+  {name:"Письма",       icon:"✉️",service:"Почтальон",                     status:"Запущен",                 segment:"local",tariffKey:"tLetters",  deadline:"",          contact:"",comment:""},
+  {name:"Гибридка",     icon:"🔀",service:"Почтальон",                     status:"Запущен",                 segment:"local",tariffKey:"tHybrid",   deadline:"",          contact:"",comment:""},
+  {name:"Avito",        icon:"🟢",service:"Доставка + выдача ПВЗ",         status:"Интеграция",              segment:"local",tariffKey:"tAvito",    deadline:"2026-04-01",contact:"",comment:"Идёт техническая интеграция"},
+  {name:"Amway",        icon:"💊",service:"Доставка + выдача ПВЗ",         status:"Обсуждение",              segment:"local",tariffKey:"tAmway",    deadline:"2026-06-01",contact:"",comment:""},
+  {name:"Transasia",    icon:"🚛",service:"Доставка",                      status:"Обсуждение",              segment:"local",tariffKey:"tTransasia",deadline:"2026-05-01",contact:"", comment:""},
+  {name:"iHERB",        icon:"🌿",service:"Растаможка + доставка до ПВЗ",  status:"Обсуждение",              segment:"intl", tariffKey:"tIherb",    deadline:"2026-07-01",contact:"",comment:"Дропшип США→Узб"},
+  {name:"UzumGlobal",   icon:"🌐",service:"Растаможка + доставка до ПВЗ",  status:"Обсуждение",              segment:"intl", tariffKey:"tUzumGlobal",deadline:"2026-05-01",contact:"",comment:""},
+  {name:"Yandex Доставка",icon:"🚕",service:"Доставка",                    status:"Обсуждение",              segment:"intl", tariffKey:"tYandexDel",deadline:"2026-06-01",contact:"", comment:""},
+  {name:"С2С РФ–Узб",   icon:"🇷🇺",service:"Растаможка + доставка до ПВЗ", status:"Обсуждение",              segment:"intl", tariffKey:"tC2CRF",    deadline:"2026-08-01",contact:"",comment:"Россия→Узбекистан"},
+  {name:"Германия",     icon:"🇩🇪",service:"Ремейлинг",                    status:"Обсуждение",              segment:"intl", tariffKey:"tGermany",  deadline:"2026-09-01",contact:"",comment:""},
+  {name:"Молдова",      icon:"🇲🇩",service:"Ремейлинг",                    status:"Обсуждение",              segment:"intl", tariffKey:"tMoldova",  deadline:"2026-09-01",contact:"",comment:""},
+  {name:"Беларусь",     icon:"🇧🇾",service:"Ремейлинг",                    status:"Обсуждение",              segment:"intl", tariffKey:"tBelarus",  deadline:"2026-10-01",contact:"",comment:""},
 ];
+let partnerEdits={};
 
 let T={
   pvzTariff:15000,pvzGrowth:10,pvzStart:9000,
@@ -405,27 +406,127 @@ function renderProjects(){
   makeBarChart("c-pb",bs.map(r=>r.label||""),Object.entries(PROJ_COLORS).map(([k,c])=>({label:PROJ_RU[k],data:bs.map(r=>r[k]||0),backgroundColor:c+"cc",stack:"a"})));
 }
 
-// ===== RENDER PARTNERS =====
+// ===== RENDER PARTNERS (KANBAN FUNNEL) =====
+function daysLeft(deadline){
+  if(!deadline) return null;
+  const diff=Math.ceil((new Date(deadline)-new Date())/(1000*60*60*24));
+  return diff;
+}
+function deadlineBadge(deadline){
+  if(!deadline) return "";
+  const d=daysLeft(deadline);
+  const color=d<0?"#dc2626":d<30?"#FF6B00":d<90?"#f59e0b":"#16a34a";
+  const label=d<0?`Просрочен ${Math.abs(d)}д`:d===0?"Сегодня!":d+"д";
+  return `<span style="font-size:9px;font-weight:700;color:${color};background:${color}15;border:1px solid ${color}30;border-radius:4px;padding:1px 5px">📅 ${label}</span>`;
+}
+function partnerRevenue(p){
+  const tariff=T[p.tariffKey]||0;
+  if(!tariff) return {rev:0,vol:0};
+  const key=p.name.toLowerCase().replace(/[^a-zа-яё]/gi,"");
+  const partKey=Object.keys({uzum:1,ozon:1,birqadam:1,makeup:1,yandex:1,avito:1,letters:1,hybrid:1,exzap:1}).find(k=>p.name.toLowerCase().includes(k.replace("letters","письм").replace("hybrid","гибрид")))||"";
+  const last=partRows[partRows.length-1];
+  const vol=last[partKey+"Vol"]||last[partKey]||0;
+  return {rev:vol*tariff,vol};
+}
+function editPartner(name,field,val){
+  if(!partnerEdits[name]) partnerEdits[name]={};
+  partnerEdits[name][field]=val;
+  renderPartners();
+}
+function getEdit(p,field){
+  return (partnerEdits[p.name]&&partnerEdits[p.name][field]!==undefined)?partnerEdits[p.name][field]:p[field]||"";
+}
+
 function renderPartners(){
   const rows=getRows(partRows),last=rows[rows.length-1];
   const total=rows.reduce((a,r)=>a+r.total,0);
   const yrLabel=activeYr==="all"?"3 года":String(2025+parseInt(activeYr));
-  const kpi=[
-    {label:`Выручка партнёры · ${yrLabel}`,val:fmtB(total)+" сум",sub:fmtUSD(total/UZS),color:"#0050B3"},
-    {label:"Последний месяц периода",val:fmtB(last.total)+" сум",sub:fmtUSD(last.total/UZS),color:"#22c55e"},
-    {label:"Uzum отправлений/мес",val:fmtN(last.uzumVol)+" шт",sub:fmtB(last.uzum)+" сум",color:"#3B82F6"},
-    {label:"BirQadam отправлений/мес",val:fmtN(last.birqadamVol)+" шт",sub:fmtB(last.birqadam)+" сум",color:"#4ade80"},
+
+  // Segment filter state
+  const seg=window._partSeg||"all";
+  const filteredPartners=seg==="all"?PARTNERS:PARTNERS.filter(p=>p.segment===seg);
+
+  // Funnel stats
+  const launched=PARTNERS.filter(p=>p.status.startsWith("Запущен"));
+  const integration=PARTNERS.filter(p=>p.status==="Интеграция");
+  const discuss=PARTNERS.filter(p=>p.status==="Обсуждение");
+
+  const COLS=[
+    {key:"Запущен",     label:"🟢 Запущен",          color:"#16a34a",bg:"#F0FDF4",border:"#86EFAC"},
+    {key:"интеграция",  label:"🟡 Интеграция",        color:"#FF6B00",bg:"#FFF7ED",border:"#FED7AA"},
+    {key:"обсуждение",  label:"🔵 Обсуждение",        color:"#3B82F6",bg:"#EFF6FF",border:"#BFDBFE"},
   ];
+
+  const kpi=[
+    {label:"Выручка партнёры · "+yrLabel,  val:fmtB(total)+" сум",       sub:fmtUSD(total/UZS),     color:"#0050B3"},
+    {label:"Запущено партнёров",            val:launched.length+" из "+PARTNERS.length, sub:fmtB(launched.reduce((a,p)=>{const t=T[p.tariffKey]||0;return a+t;},0)/12)+" сум/мес", color:"#16a34a"},
+    {label:"Интеграция",                    val:integration.length+" партнёров",sub:"Скоро запуск",  color:"#FF6B00"},
+    {label:"В обсуждении",                  val:discuss.length+" партнёров", sub:"Потенциал: "+fmtB(discuss.reduce((a,p)=>{return a+(T[p.tariffKey]||15000)*10000;},0))+" сум", color:"#3B82F6"},
+  ];
+
   document.getElementById("sec-partners").innerHTML=`
     <div class="kpi-grid">${kpi.map(k=>`<div class="kpi" style="background:${k.color}0d;border:1px solid ${k.color}25"><div class="kpi-label">${k.label}</div><div class="kpi-val" style="color:${k.color}">${k.val}</div><div class="kpi-sub">${k.sub}</div></div>`).join("")}</div>
-    <div class="chart-grid">
-      <div class="card"><div class="card-title">📈 Ежемесячная выручка · ${yrLabel}</div><div style="height:220px"><canvas id="c-ptl"></canvas></div></div>
-      <div class="card"><div class="card-title">📊 ${activeYr==="all"?"Годовая выручка":"Месяцы "+yrLabel}</div><div style="height:220px"><canvas id="c-ptb"></canvas></div></div>
+
+    <div class="chart-grid" style="margin-bottom:14px">
+      <div class="card"><div class="card-title">📈 Ежемесячная выручка · ${yrLabel}</div><div style="height:200px"><canvas id="c-ptl"></canvas></div></div>
+      <div class="card"><div class="card-title">📊 ${activeYr==="all"?"Годовая выручка":"Месяцы "+yrLabel}</div><div style="height:200px"><canvas id="c-ptb"></canvas></div></div>
     </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:12px">🤝 Все партнёры — статус</div>
-      <div class="partner-grid">${PARTNERS.map(p=>{const sc=statusColor(p.status);return`<div class="partner-item" style="background:${sc}08;border:1px solid ${sc}25"><div class="partner-top"><span class="partner-name">${p.name}</span><span class="partner-badge" style="background:${sc}20;border:1px solid ${sc}40;color:${sc}">${p.status}</span></div><div class="partner-svc">${p.service}</div></div>`;}).join("")}</div>
+
+    <!-- Funnel bar -->
+    <div class="card" style="margin-bottom:14px;padding:14px 16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+        <div class="card-title" style="margin:0">🔄 Воронка партнёров</div>
+        <div style="display:flex;gap:6px">
+          <button onclick="window._partSeg='all';renderPartners()" style="padding:4px 10px;border-radius:6px;border:1px solid #D1D5DB;background:${seg==="all"?"#003087":"#fff"};color:${seg==="all"?"#fff":"#6B7280"};font-size:11px;font-weight:700;cursor:pointer">Все</button>
+          <button onclick="window._partSeg='local';renderPartners()" style="padding:4px 10px;border-radius:6px;border:1px solid #D1D5DB;background:${seg==="local"?"#003087":"#fff"};color:${seg==="local"?"#fff":"#6B7280"};font-size:11px;font-weight:700;cursor:pointer">🇺🇿 Локальные</button>
+          <button onclick="window._partSeg='intl';renderPartners()" style="padding:4px 10px;border-radius:6px;border:1px solid #D1D5DB;background:${seg==="intl"?"#003087":"#fff"};color:${seg==="intl"?"#fff":"#6B7280"};font-size:11px;font-weight:700;cursor:pointer">🌍 Международные</button>
+        </div>
+      </div>
+      <!-- Funnel visual -->
+      <div style="display:flex;gap:0;margin-bottom:12px;border-radius:10px;overflow:hidden;height:36px">
+        ${[
+          {label:"🟢 Запущен "+launched.length,pct:launched.length/PARTNERS.length,color:"#16a34a"},
+          {label:"🟡 Интеграция "+integration.length,pct:integration.length/PARTNERS.length,color:"#FF6B00"},
+          {label:"🔵 Обсуждение "+discuss.length,pct:discuss.length/PARTNERS.length,color:"#3B82F6"},
+        ].map(s=>`<div style="flex:${s.pct};background:${s.color};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;white-space:nowrap;padding:0 8px;min-width:0;overflow:hidden">${s.label}</div>`).join("")}
+      </div>
+      <!-- Kanban columns -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+        ${COLS.map(col=>{
+          const colPartners=filteredPartners.filter(p=>p.status.toLowerCase().startsWith(col.key.toLowerCase()));
+          return `<div style="background:${col.bg};border:1px solid ${col.border};border-radius:10px;padding:10px">
+            <div style="font-size:11px;font-weight:800;color:${col.color};margin-bottom:8px;display:flex;justify-content:space-between">
+              <span>${col.label}</span><span style="background:${col.color}20;border-radius:10px;padding:1px 7px">${colPartners.length}</span>
+            </div>
+            ${colPartners.map(p=>{
+              const tariff=T[p.tariffKey]||0;
+              const dl=getEdit(p,"deadline");
+              const ct=getEdit(p,"contact");
+              const cm=getEdit(p,"comment");
+              const sc=statusColor(p.status);
+              return `<div style="background:#fff;border-radius:8px;padding:10px;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,.07)">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px">
+                  <span style="font-size:13px;font-weight:800;color:#1A1A2E">${p.icon} ${p.name}</span>
+                  <span style="font-size:8px;font-weight:700;padding:2px 5px;border-radius:4px;background:${p.segment==="local"?"#EFF6FF":"#FFF7ED"};color:${p.segment==="local"?"#3B82F6":"#FF6B00"};white-space:nowrap">${p.segment==="local"?"🇺🇿 Локал":"🌍 Интл"}</span>
+                </div>
+                <div style="font-size:10px;color:#9CA3AF;margin-bottom:6px">${p.service}</div>
+                ${tariff?`<div style="font-size:10px;font-weight:700;color:#16a34a;margin-bottom:4px">💰 ${fmtN(tariff)} сум/отпр.</div>`:""}
+                <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px">
+                  ${deadlineBadge(dl)}
+                </div>
+                <input placeholder="📅 Дедлайн (ГГГГ-ММ-ДД)" value="${dl}" onchange="editPartner('${p.name}','deadline',this.value)"
+                  style="width:100%;font-size:10px;border:1px solid #E5E7EB;border-radius:5px;padding:3px 6px;margin-bottom:4px;outline:none;font-family:inherit"/>
+                <input placeholder="👤 Контакт" value="${ct}" onchange="editPartner('${p.name}','contact',this.value)"
+                  style="width:100%;font-size:10px;border:1px solid #E5E7EB;border-radius:5px;padding:3px 6px;margin-bottom:4px;outline:none;font-family:inherit"/>
+                <input placeholder="💬 Комментарий" value="${cm}" onchange="editPartner('${p.name}','comment',this.value)"
+                  style="width:100%;font-size:10px;border:1px solid #E5E7EB;border-radius:5px;padding:3px 6px;outline:none;font-family:inherit"/>
+              </div>`;
+            }).join("")}
+          </div>`;
+        }).join("")}
+      </div>
     </div>`;
+
   const labels=getLabels();
   makeLineChart("c-ptl",labels,Object.entries(PART_COLORS).map(([k,c])=>({label:PART_RU[k],data:rows.map(r=>r[k]||0),borderColor:c,backgroundColor:c+"33",stack:"a"})));
   const bs=activeYr==="all"?getAnnual(partRows,Object.keys(PART_COLORS)):rows.map((r,i)=>({label:labels[i],...r}));
